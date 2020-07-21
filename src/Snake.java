@@ -13,7 +13,7 @@ public class Snake {
 	
 	
 	public Snake() {
-		body = new ArrayList<Node>();
+		body = new LinkedList<Node>();
 		
 		// By default there should be something in the snake body, hence we are adding one node. 
 		// Starting at 1,1 location.
