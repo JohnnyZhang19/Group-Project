@@ -59,23 +59,6 @@ public class Frame{
 
 
 	public void printFrame() {
-//		for(int i = 0; i < getRowNum(); i++) {
-//			if(i == 0||i == getRowNum()-1) {
-//				for (int j = 0; j < getColNum(); j++) {
-//					System.out.print("-");
-//				}
-//			}else {
-//				System.out.print("-");
-//				for (int j = 0; j < actualColNum; j++) {
-//					System.out.print("*");
-//				}
-//				System.out.print("-");
-//			}
-//			
-//			System.out.println();
-//			
-//		}
-//		
 		int counter = 1;
 		
 		for (Node node : nodes) {
