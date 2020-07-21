@@ -9,7 +9,7 @@ public class Node {
 		private int yCoord;
 		private int type;
  
-		public Node(int xCoord, int yCoord) {
+		public Node(int xCoord, int yCoord, int type) {
 			this.xCoord = xCoord;
 			this.yCoord = yCoord;
 			this.type = type;
