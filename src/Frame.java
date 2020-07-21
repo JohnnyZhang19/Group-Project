@@ -47,7 +47,7 @@ public class Frame{
 	public void run() {
 		//吃到蛋
 		if(snake.getBody().getFirst() == egg.getLocation()) {   
-			snake.addFromTail(new Node(3));                    //head, Snake, body，addFromTail() 都在Snake类里面
+			snake.addFromTail(new Node(3));                    //head, Snake, body，addFromTail() 
 			score = score + 1;
 			Egg location = new Egg();
 			location.reAssign();
@@ -124,12 +124,12 @@ public class Frame{
 	
 
 	public void reAppear() {
-		// 1 egg重新生成（判断新egg是否与蛇现在的位置重合）
+		// 1 egg
 		egg.reAssign();
 		
 		
 		
-		// 2 蛇往前走一步
+		// 2 snake moving 1 move
 		int tailX = snake.getTail().getX();
 		int tailY = snake.getTail().getY();
 		int secondTailX = snake.getTail().getX();
@@ -145,9 +145,9 @@ public class Frame{
 			snake.addFromTail(new Node(tailX - 1,tailY,3));
 		}
 			
-//			新蛋是否与身体合, 新墙是否和蛇重合，新蛋新墙是否重合
+//			
 			
-//			if(snake.getLocation() == location.reAssign()){          //可以get整个链表的x, y值吗
+//			if(snake.getLocation() == location.reAssign()){          
 //				location.reAssign();
 //			}
 //			Obstacles loca = new Obstacles(null);
@@ -172,7 +172,7 @@ public class Frame{
 		return false;
 	}
 
-	//加速	
+	// speedUp
 		
 	public static void main(String[] args) {
 		Frame frame = new Frame();
