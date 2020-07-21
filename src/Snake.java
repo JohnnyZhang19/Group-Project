@@ -23,6 +23,12 @@ public class Snake {
 		node.setyCoord(1);
 		body.add(node);
 	}
+	public Node getTail() {
+		return tail;
+	}
+	public Node getHead() {
+		return head;
+	}
 	
 	public void addFromTail(Node node) {
 		body.add(node);
