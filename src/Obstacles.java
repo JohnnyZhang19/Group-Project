@@ -13,5 +13,6 @@ public class Obstacles {
 	public void addObstacles() {
 		Random rand = new Random();
 		Node loca = new Node(rand.nextInt(15), rand.nextInt(15),2);
+		this.loca = loca;
 	}
 }
