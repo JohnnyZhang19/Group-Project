@@ -11,13 +11,7 @@ public class Obstacles {
 	}
 	
 	public void addObstacles() {
-		if(score.getScore()%5 == 0) {
-			Random rand = new Random();
-			Node loca = new Node(rand.nextInt(15), rand.nextInt(15),2);
-			this.loca = loca;
-		}else
-			return;
-		
+		Random rand = new Random();
+		Node loca = new Node(rand.nextInt(15), rand.nextInt(15),2);
 	}
-
 }
