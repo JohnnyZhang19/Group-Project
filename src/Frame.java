@@ -45,7 +45,7 @@ public class Frame{
 	}
 
 	public void run() {
-		//吃到蛋
+		// eat the egg
 		if(snake.getBody().getFirst() == egg.getLocation()) {   
 			snake.addFromTail(new Node(3));                    //head, Snake, body，addFromTail() 
 			score = score + 1;
@@ -144,21 +144,7 @@ public class Frame{
 		}else {
 			snake.addFromTail(new Node(tailX - 1,tailY,3));
 		}
-			
-//			
-			
-//			if(snake.getLocation() == location.reAssign()){          
-//				location.reAssign();
-//			}
-//			Obstacles loca = new Obstacles(null);
-//			if(body.getLocation() == loca.addObstacles() || head.getLocation() == loca.addObstacles()) {   //怎么避开x+-1, y+-1
-//				loca.addObstacles();
-//			}
-//			if(loca.addObstacles() = location.reAssign()) {
-//				location.reAssign();
-//				loca.addObstacles();
-//			}
-//		}
+		
 	}
 	
 	public boolean gameOver() {
