@@ -4,6 +4,8 @@
  * @author Ha Do
  *
  */
+package snake;
+
 public class Node {
 		private int x;
 		private int y;
