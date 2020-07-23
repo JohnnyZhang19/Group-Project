@@ -1,3 +1,5 @@
+package snake;
+
 import java.util.Random;
 
 public class Egg {
