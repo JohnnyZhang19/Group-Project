@@ -1,4 +1,3 @@
-package snake;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +42,19 @@ public class Frame{
 	public int getColNum() {
 		return colNum;
 	}
-
+	
+	/**
+	 * To make the snake move and make players decide the 
+	 * direction 
+	 */
 	public void run() {
 		Initialize();
 		printFrame();
 		Scanner scanner = new Scanner(System.in);
 		while (true) {
+			/**
+			 * Enter a direction to decide where the snake should go
+			 */
 			System.out.println("enter a direction( w: up, d: right, s: down,a: left )");
 			String direction = scanner.nextLine();
 			if (!(direction.equals("a") || direction.equals("s") || direction.equals("d")  || direction.equals("w"))) {
@@ -57,6 +63,9 @@ public class Frame{
 			
 			int headDirection = hasDirection();
 			
+			/**
+			 * To ensure the snake will not move opposite
+			 */
 			if((direction.equals("a") && headDirection == 2) || (direction.equals("s") && headDirection == 1) || 
 					(direction.equals("w") && headDirection == 3) || (direction.equals("d") && headDirection == 4)) {
 				
@@ -72,6 +81,9 @@ public class Frame{
 			}else {
 				move(2);
 			}
+			/**
+			 * To eat eggs when the snake head move to the location of eggs
+			 */
 			if(snake.getHead().getX() == egg.getLocation().getX() && snake.getHead().getY() == egg.getLocation().getY()) {
 				if(direction.equals("a")) {
 					eat(4);
@@ -83,7 +95,10 @@ public class Frame{
 					eat(2);
 				}
 			}
-			
+			/**
+			 * When the location of snake head move to the wall the console 
+			 * will appear "Game Over!!"
+			 */
 			printFrame();
 			if((snake.getHead().getX() == 0 || snake.getHead().getX() == colNum-1) || (snake.getHead().getY() == 0 || snake.getHead().getY() == rowNum-1)) {
 				System.out.println("Game Over!!");
@@ -104,7 +119,7 @@ public class Frame{
 	
 	
 	/**
-	 * 
+	 * To declare the direction by certain numbers.
 	 * @param direction(1: up, 2: right, 3: down, 4:left)
 	 */
 	private void move(int direction) {
@@ -120,6 +135,11 @@ public class Frame{
 		refresh();
 		
 	}
+	
+	/**
+	 * Every time the snake move and the egg appear, this frame will 
+	 * print once to refresh location of the nodes of snakes and egg.
+	 */
 	private void refresh() {
 		nodes.clear();
 
@@ -156,6 +176,10 @@ public class Frame{
 		nodes.set(eggLocation.getX() + eggLocation.getY() *rowNum,new Node(2));	
 	}
 
+	/**
+	 * When the location of snake head is same as the egg.
+	 * @param direction
+	 */
 	private void eat(int direction) {
 		snake.eat(direction);
 		reAppear();
@@ -163,7 +187,8 @@ public class Frame{
 	}
 	
 	/**
-	 * 
+	 * To get the opposite direction of the snake and avoid that 
+	 * direction.
 	 * @return 1: up, 2: right, 3: down, 4:left
 	 */
 	private int hasDirection(){
@@ -192,6 +217,9 @@ public class Frame{
 		}
 	}
 
+	/**
+	 * To print the map.
+	 */
 	public void printFrame() {
 		int counter = 1;
 		
@@ -217,6 +245,9 @@ public class Frame{
 	}
 
 	
+	/**
+	 * To initialize the position of snake and egg.
+	 */
 	public void Initialize() {
 		snake = new Snake(new Node(2,4,5),new Node(2,3,3));
 		egg = new Egg(new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),2));
@@ -255,6 +286,9 @@ public class Frame{
 	}
 	
 
+	/**
+	 * To reappear a egg in another random position when snake eat egg.
+	 */
 	public void reAppear() {
 		// 1 egg
 		egg.reAssign(rowNum,colNum);
