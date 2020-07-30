@@ -1,29 +1,29 @@
+package snake;
 
-import java.util.Random;
 
 public class Egg {
-	
-	int score = 1;
+	Integer score = 1;
 	Node location;
 
 	public int getScore() {
 		return score;
 	}
-	
 	public Egg() {
-	
+		
 	}
+	
 	public Egg(Node location) {
 		this.location = location;
 	}
 
-	public void reAssign() {
-		Random rand = new Random();
-		Node location = new Node(rand.nextInt(15), rand.nextInt(15),2);
+	public void reAssign(int rowNum, int colNum) {
+		Node location = new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),2);
 		this.location = location;
-	}																
+	}
 
 	public Node getLocation() {
 		return location;
 	}
+	
+	
 }
