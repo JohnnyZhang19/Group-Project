@@ -1,22 +1,21 @@
-import java.util.Random;
 
 public class Obstacles {
-	int obswidth = 3;
-	int obsheigt = 2;
-	Node loca;
+	Node obsloca;
+	int num = 0;
 	
 	public Obstacles(Node location) {
-		this.loca = location;
+		this.obsloca = location;
 	}
 	
-	public void addObstacles() {
-			Random rand = new Random();
-			Node loca = new Node(rand.nextInt(15), rand.nextInt(15),2);
-			this.loca = loca;
+	public void addObstacles(int rowNum, int colNum) {
+		for(num = 0;num < 20;num++) {
+			Node obsloca = new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),4);
+			this.obsloca = obsloca;
+		}
 	}
+	
 	public Node getLocation() {
-		
-		return loca;
+		return obsloca;
 	}
 	
 }

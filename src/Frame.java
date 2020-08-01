@@ -300,7 +300,7 @@ public class Frame{
 		//Egg replacement
 		Node eggLocation = egg.getLocation();
 		nodes.set(eggLocation.getX() + eggLocation.getY() *rowNum,new Node(2));	
-			
+		
 	}
 	
 	public boolean gameOver() {
