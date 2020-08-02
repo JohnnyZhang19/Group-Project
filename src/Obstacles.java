@@ -1,21 +1,15 @@
+package snake;
 
 public class Obstacles {
-	Node obsloca;
-	int num = 0;
+	Node locationO;
 	
-	public Obstacles(Node location) {
-		this.obsloca = location;
+	public Obstacles(Node locationO) {
+		this.locationO = locationO;
+	}
+	public Obstacles() {
 	}
 	
-	public void addObstacles(int rowNum, int colNum) {
-		for(num = 0;num < 20;num++) {
-			Node obsloca = new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),4);
-			this.obsloca = obsloca;
-		}
+	public Node getLocationO() {
+		return locationO;
 	}
-	
-	public Node getLocation() {
-		return obsloca;
-	}
-	
 }
