@@ -1,17 +1,24 @@
+package snake;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
+/**
+ * this frame class is to compile all other class, and to make the game run
+ * @author Zonglin Zhang UCID: 30020965
+ *
+ */
 public class Frame{
-	public int actualRowNum = 15;
-	public int actualColNum = 15;
+	public int actualRowNum = 30;
+	public int actualColNum = 30;
 	public int rowNum = actualRowNum+2;
 	public int colNum = actualColNum+2;
 	List<Node> nodes = new ArrayList<Node>();
 	public Snake snake = new Snake();
 	public Egg egg = new Egg();
+	public Obstacles obs = new Obstacles();
 	int score = 0;
+	Node[] obsList = new Node[10];
 	
 	
 
@@ -51,7 +58,8 @@ public class Frame{
 		Initialize();
 		printFrame();
 		Scanner scanner = new Scanner(System.in);
-		while (true) {
+		boolean run = true;
+		while (run) {
 			/**
 			 * Enter a direction to decide where the snake should go
 			 */
@@ -81,6 +89,7 @@ public class Frame{
 			}else {
 				move(2);
 			}
+			
 			/**
 			 * To eat eggs when the snake head move to the location of eggs
 			 */
@@ -94,7 +103,10 @@ public class Frame{
 				}else {
 					eat(2);
 				}
+				score++;
+
 			}
+			
 			/**
 			 * When the location of snake head move to the wall the console 
 			 * will appear "Game Over!!"
@@ -102,19 +114,27 @@ public class Frame{
 			printFrame();
 			if((snake.getHead().getX() == 0 || snake.getHead().getX() == colNum-1) || (snake.getHead().getY() == 0 || snake.getHead().getY() == rowNum-1)) {
 				System.out.println("Game Over!!");
-				break;
+				run = false;
 			}
-//			for(int i = 1; i <= snake.getBody().size(); i ++) {
-//				int bodyX = snake.getBody().get(i).getX();
-//				int bodyY = snake.getBody().get(i).getY();
-//				if(snake.getHead().getX() == bodyX && snake.getHead().getY() == bodyY) {
-//					break;
-//				}
-//			}
-			
+//			}else if(snake.getHead().getX() == obs.getLocationO().getX() && snake.getHead().getY() == obs.getLocationO().getY()) {
+//				System.out.println("Game Over!!");
+//				break;
+			for(int i = 0; i < obsList.length; i ++) {
+				if(snake.getHead().getX() == obsList[i].getX() && snake.getHead().getY() == obsList[i].getY()) {
+					System.out.println("Game Over!!");
+					run = false;
+				}
+			}
+			int snakeBodySize = snake.getBody().size();
+			for (int i = 1; i < snakeBodySize; i++) {
+				Node bodyNode = snake.getBody().get(i);
+				if(snake.getHead().getX() == bodyNode.getX() && snake.getHead().getY() == bodyNode.getY()) {
+					System.out.println("Game Over!!");
+					run = false;
+				}
+			}
 		}
 		scanner.close();
-		
 	}
 	
 	
@@ -135,7 +155,6 @@ public class Frame{
 		refresh();
 		
 	}
-	
 	/**
 	 * Every time the snake move and the egg appear, this frame will 
 	 * print once to refresh location of the nodes of snakes and egg.
@@ -162,20 +181,24 @@ public class Frame{
 		}
 
 		Node head = snake.getBody().getFirst();
-		nodes.set(head.getX() + head.getY() *17,new Node(5));
+		nodes.set(head.getX() + head.getY() *rowNum,new Node(5));
 
 		int snakeBodySize = snake.getBody().size();
 		for (int i = 1; i < snakeBodySize; i++) {
 			Node node = snake.getBody().get(i);
-			int count = node.getX() + node.getY() *17;
+			int count = node.getX() + node.getY() *rowNum;
 			nodes.set(count, new Node(3));
 		}
 
 		//Egg replacement
 		Node eggLocation = egg.getLocation();
-		nodes.set(eggLocation.getX() + eggLocation.getY() *rowNum,new Node(2));	
+		nodes.set(eggLocation.getX() + eggLocation.getY() *rowNum,new Node(2));
+		
+		for(int i = 0; i < obsList.length; i ++) {
+			Node obsLocation = obsList[i];
+			nodes.set(obsLocation.getX() + obsLocation.getY() *rowNum,new Node(4));
+		}
 	}
-
 	/**
 	 * When the location of snake head is same as the egg.
 	 * @param direction
@@ -216,7 +239,7 @@ public class Frame{
 			}
 		}
 	}
-
+	
 	/**
 	 * To print the map.
 	 */
@@ -242,9 +265,12 @@ public class Frame{
 			
 			counter++;
 		}
+		/**
+		 * to print score
+		 */
+		System.out.println(score);
 	}
 
-	
 	/**
 	 * To initialize the position of snake and egg.
 	 */
@@ -271,58 +297,60 @@ public class Frame{
 		}
 		
 		Node head = snake.getBody().getFirst();
-		nodes.set(head.getX() + head.getY() *17,new Node(5));
+		nodes.set(head.getX() + head.getY() *rowNum,new Node(5));
 		
 		int snakeBodySize = snake.getBody().size();
 		for (int i = 1; i < snakeBodySize; i++) {
 			Node node = snake.getBody().get(i);
-			int count = node.getX() + node.getY() *17;
+			int count = node.getX() + node.getY() *rowNum;
 			nodes.set(count, new Node(3));
 		}
 		
 		//Egg replacement
+		if(egg.getLocation().getX() == snake.getBody().element().getX() && egg.getLocation().getY() == snake.getBody().element().getY()) {
+			egg = new Egg(new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),2));
+		}
 		Node eggLocation = egg.getLocation();
-		nodes.set(eggLocation.getX() + eggLocation.getY() *17,new Node(2));	
+		nodes.set(eggLocation.getX() + eggLocation.getY() *rowNum,new Node(2));	
+		
+		for(int i = 0; i < 5; i ++) {
+			obs = new Obstacles(new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),4));
+			if(!(obs.getLocationO().getX() == snake.getBody().element().getX() && obs.getLocationO().getY() == snake.getBody().element().getY()) ||
+					!(obs.getLocationO().getX() == egg.getLocation().getX() && obs.getLocationO().getX() == egg.getLocation().getX())) {
+				Node obsLocation = obs.getLocationO();
+				nodes.set(obsLocation.getX() + obsLocation.getY() *rowNum,new Node(4));
+				obsList[i] = obsLocation;
+			}
+		}
 	}
 	
-
 	/**
 	 * To reappear a egg in another random position when snake eat egg.
 	 */
 	public void reAppear() {
-		// 1 egg
-		egg.reAssign(rowNum,colNum);
 
 		// 2 snake moving
 
 		snake.eat(hasDirection());
 		
 		//Egg replacement
+		egg.reAssign(rowNum,colNum);
+		if(egg.getLocation().getX() == snake.getBody().element().getX() && egg.getLocation().getY() == snake.getBody().element().getY()) {
+			egg.reAssign(rowNum, colNum);
+		}
 		Node eggLocation = egg.getLocation();
 		nodes.set(eggLocation.getX() + eggLocation.getY() *rowNum,new Node(2));	
 		
-	}
-	
-	public boolean gameOver() {
-		boolean live = false;
-		
-		while(live) {
-			if(!(snake.getHead().getX() == 0 || snake.getHead().getX() == actualColNum) || !(snake.getHead().getY() == 0 || snake.getHead().getY() == actualRowNum)) {
-				live = true;
-			}
-			for(int i = 1; i <= snake.getBody().size(); i ++) {
-				if(!(snake.getHead().getX() == snake.getBody().get(i).getX() || snake.getHead().getY() == snake.getBody().get(i).getY())) {
-					live = true;
-				}
+		//Obstacles shows
+		for(int i = 0; i < 5; i ++) {
+			obs = new Obstacles(new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),4));
+			if(!(obs.getLocationO().getX() == snake.getBody().element().getX() && obs.getLocationO().getY() == snake.getBody().element().getY()) ||
+					!(obs.getLocationO().getX() == egg.getLocation().getX() && obs.getLocationO().getX() == egg.getLocation().getX())) {
+				Node obsLocation = obs.getLocationO();
+				nodes.set(obsLocation.getX() + obsLocation.getY() *rowNum,new Node(4));
+				obsList[i] = obsLocation;
 			}
 		}
-		return live;
-	}
-		
-	public static void main(String[] args) {
-		Frame frame = new Frame();
-		frame.run(); 
-		
 	}
 	
 }
