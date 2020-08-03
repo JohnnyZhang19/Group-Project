@@ -1,3 +1,4 @@
+package snake;
 /**
  * This class is for setting and getting the positions of the nodes for different elements in the game,
  * namely normal, egg and snake positions.

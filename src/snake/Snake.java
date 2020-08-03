@@ -1,3 +1,4 @@
+package snake;
 
 import java.util.LinkedList;
 
