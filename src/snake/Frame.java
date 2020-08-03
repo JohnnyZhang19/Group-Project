@@ -19,7 +19,8 @@ public class Frame{
 	public Egg egg = new Egg();
 	public Obstacles obs = new Obstacles();
 	int score = 0;
-	Node[] obsList = new Node[10];
+	int listLength = 10;
+	Node[] obsList = new Node[listLength];
 	
 	
 
@@ -39,12 +40,13 @@ public class Frame{
 		this.actualRowNum = actualRowNum;
 	}
 
-	public Node[] getObsList() {
-		return obsList;
+
+	public int getListLength() {
+		return listLength;
 	}
 
-	public void setObsList(Node[] obsList) {
-		this.obsList = obsList;
+	public void setListLength(int listLength) {
+		this.listLength = listLength;
 	}
 
 	public int getActualColNum() {
