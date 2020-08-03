@@ -11,6 +11,5 @@ public class Obstacles {
 	
 	public Node getLocationO() {
 		return locationO;
-
 	}
 }
