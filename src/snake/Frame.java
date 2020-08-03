@@ -275,7 +275,7 @@ public class Frame{
 	 * To initialize the position of snake and egg.
 	 */
 	public void Initialize() {
-		snake = new Snake(new Node(2,4,5),new Node(2,3,3));
+		snake = new Snake(new Node(rowNum/2,colNum/2,5),new Node(rowNum/2,colNum/2 - 1,3));
 		egg = new Egg(new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),2));
 		
 		for(int i = 0; i < getRowNum(); i++) {
