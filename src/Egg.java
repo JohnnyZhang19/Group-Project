@@ -1,3 +1,4 @@
+package snake;
 
 
 public class Egg {
@@ -18,11 +19,8 @@ public class Egg {
 	public void reAssign(int rowNum, int colNum) {
 		Node location = new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),2);
 		this.location = location;
-		if(location == Obstacles.addObstacles(int rowNum, int colNum)) {
-			location = new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),2);
-		}
 	}
-	
+
 	public Node getLocation() {
 		return location;
 	}
