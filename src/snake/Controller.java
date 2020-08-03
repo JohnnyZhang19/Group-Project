@@ -30,8 +30,11 @@ public class Controller extends Frame{
 	private Button start;
 	
 	private int userChooseLevel = 0;
-	int time = 300;
 
+	/**
+	 * To start the game.
+	 * @param event click the button.
+	 */
 	@FXML
 	void toStart(ActionEvent event) {
 		run();
@@ -53,10 +56,10 @@ public class Controller extends Frame{
 							setListLength(10);
 							}
 						if(userChooseLevel == 1) {
-							setListLength(20);
+							setListLength(15);
 						}
 						if(userChooseLevel == 2) {
-							setListLength(30);
+							setListLength(20);
 						}
 					}
 				
