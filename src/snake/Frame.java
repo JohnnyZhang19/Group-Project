@@ -20,7 +20,9 @@ public class Frame{
 	int score = 0;
 	Node[] obsList = new Node[10];
 	
-	
+	public int getScore() {
+		return score;
+	}
 
 	public List<Node> getNodes() {
 		return nodes;
