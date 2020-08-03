@@ -33,28 +33,26 @@ public class Main extends Application{
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
 		root.getChildren().add(aCanvas);
 		Snake newSnake = new Snake();
-		ObservableList<String> options = 
-			    FXCollections.observableArrayList(
-			        "Easy",
-			        "Normal",
-			        "Hard"
-			    );
-		root.getChildren().addAll(new Label("Select level"), new ComboBox(options));
-		EventHandler<ActionEvent> event = 
-                new EventHandler<ActionEvent>() { 
+		final ComboBox level = new ComboBox();
+		level.getItems().addAll(
+            "Easy",
+            "Normal",
+            "Hard"); 
+		root.getChildren().addAll(new Label("Select level"), level);
+		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
           public void handle(ActionEvent e) 
           { 
-              if(ComboBox(options).getValue().equals("Easy")) {
+              if(level.getValue().equals("Easy")) {
             	  //Speed of snake is slow
-              }; 
-              if(ComboBox(options).getValue().equals("Normal")) {
+              }
+              if(level.getValue().equals("Normal")) {
             	  //Speed of snake is normal
-              }; 
-              if(ComboBox(options).getValue().equals("Hard")) {
+              } 
+              if(level.getValue().equals("Hard")) {
             	  //Speed of snake is fast
-              }; 
+              }
           }
-
+		};
 
 		
 		
@@ -71,10 +69,22 @@ public class Main extends Application{
 		
 		Scene scene = new Scene(root, 400, 400);
 /**		scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
-			 if(key.getCode() == KeyCode.A) snake.left();
-		});
-		
-	*/	primaryStage.setScene(scene);
+				if (key.getCode() == KeyCode.W) {
+					direction = Dir.up;
+				}
+				if (key.getCode() == KeyCode.A) {
+					direction = Dir.left;
+				}
+				if (key.getCode() == KeyCode.S) {
+					direction = Dir.down;
+				}
+				if (key.getCode() == KeyCode.D) {
+					direction = Dir.right;
+				}
+
+			});
+*/		
+		primaryStage.setScene(scene);
 		primaryStage.setTitle("SNAKE FRENZY");
 		primaryStage.show();
 		
