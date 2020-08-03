@@ -3,6 +3,7 @@ package snake;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 /**
  * this frame class is to compile all other class, and to make the game run
  * @author Zonglin Zhang UCID: 30020965
@@ -20,17 +21,12 @@ public class Frame{
 	int score = 0;
 	Node[] obsList = new Node[10];
 	
+	
+
 	public int getScore() {
 		return score;
 	}
-	
-	public Node[] getObsList() {
-		return obsList;
-	}
 
-	public void setObsList(Node[] obsList) {
-		this.obsList = obsList;
-	}
 	public List<Node> getNodes() {
 		return nodes;
 	}
@@ -41,6 +37,14 @@ public class Frame{
 
 	public void setActualRowNum(int actualRowNum) {
 		this.actualRowNum = actualRowNum;
+	}
+
+	public Node[] getObsList() {
+		return obsList;
+	}
+
+	public void setObsList(Node[] obsList) {
+		this.obsList = obsList;
 	}
 
 	public int getActualColNum() {
@@ -322,7 +326,7 @@ public class Frame{
 		Node eggLocation = egg.getLocation();
 		nodes.set(eggLocation.getX() + eggLocation.getY() *rowNum,new Node(2));	
 		
-		for(int i = 0; i < 5; i ++) {
+		for(int i = 0; i < obsList.length; i ++) {
 			obs = new Obstacles(new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),4));
 			if(!(obs.getLocationO().getX() == snake.getBody().element().getX() && obs.getLocationO().getY() == snake.getBody().element().getY()) ||
 					!(obs.getLocationO().getX() == egg.getLocation().getX() && obs.getLocationO().getX() == egg.getLocation().getX())) {
