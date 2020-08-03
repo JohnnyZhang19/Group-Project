@@ -159,7 +159,7 @@ public class Frame{
 	 * Every time the snake move and the egg appear, this frame will 
 	 * print once to refresh location of the nodes of snakes and egg.
 	 */
-	void refresh() {
+	private void refresh() {
 		nodes.clear();
 
 		for(int i = 0; i < getRowNum(); i++) {

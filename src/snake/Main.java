@@ -2,10 +2,13 @@ package snake;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -26,13 +29,22 @@ public class Main extends Application{
 		Canvas aCanvas = new Canvas(350, 350);
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
 		root.getChildren().add(aCanvas);
+		Snake newSnake = new Snake();
+		ObservableList<String> options = 
+			    FXCollections.observableArrayList(
+			        "Option 1",
+			        "Option 2",
+			        "Option 3"
+			    );
+		root.getChildren().addAll(new Label("Select level"), new ComboBox(options));
+
+		
 		
 /**			AnimationTimer timer = new AnimationTimer() {
-
+		
 		@Override
 			public void handle(long now) {
-				// TODO Auto-generated method stub
-				
+				newSnake.getBody();
 			}
 			
 		}
@@ -50,6 +62,8 @@ public class Main extends Application{
 		
 		
 	}
+	
+	
 	
 	public static void main(String[] arg) {
 		//Frame frame = new Frame();
