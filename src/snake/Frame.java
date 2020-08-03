@@ -23,7 +23,14 @@ public class Frame{
 	public int getScore() {
 		return score;
 	}
+	
+	public Node[] getObsList() {
+		return obsList;
+	}
 
+	public void setObsList(Node[] obsList) {
+		this.obsList = obsList;
+	}
 	public List<Node> getNodes() {
 		return nodes;
 	}
