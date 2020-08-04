@@ -25,12 +25,12 @@ import javafx.scene.text.Font;
 
 public class Main extends Application{
 	static Dir direction = Dir.left;
-	public int actualRowNum = 30;
-	public int actualColNum = 30;
-	public int rowNum = actualRowNum+2;
-	public int colNum = actualColNum+2;
+	public static int actualRowNum = 30;
+	public static int actualColNum = 30;
+	public static int rowNum = actualRowNum+2;
+	public static int colNum = actualColNum+2;
 	List<Node> nodes = new ArrayList<Node>();
-	public int nodeSize = 20;
+	public static int nodeSize = 15;
 	public Snake snake = new Snake();
 	public Egg egg = new Egg();
 	public Obstacles obs = new Obstacles();
@@ -41,23 +41,23 @@ public class Main extends Application{
 	public enum Dir {
 		left, right, up, down
 	}
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
 		Frame newFrame = new Frame();
 		newFrame.Initialize(); //or refresh or reappear?
 		VBox root = new VBox();
-		Canvas aCanvas = new Canvas(rowNum * nodeSize, colNum * nodeSize);
+		Canvas aCanvas = new Canvas(rowNum * nodeSize-50, colNum * nodeSize-50);
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
-		root.getChildren().add(aCanvas);
-		Snake newSnake = new Snake();
-		final ComboBox level = new ComboBox();
-		level.getItems().addAll(
-            "Easy",
-            "Medium",
-            "Difficult"); 
-		root.getChildren().addAll(new Label("Select level"), level);
-		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
+
+		ObservableList<String> options = 
+			    FXCollections.observableArrayList(
+			        "Option 1",
+			        "Option 2",
+			        "Option 3"
+			    );
+		root.getChildren().addAll(aCanvas ,new Label("Select level"), new ComboBox(options));
+/**		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
           public void handle(ActionEvent e) 
           { 
               if(level.getValue().equals("Easy")) {
@@ -72,7 +72,7 @@ public class Main extends Application{
           }
 		};
 
-		
+	*/	
 		
 
 		
@@ -101,9 +101,23 @@ public class Main extends Application{
 		primaryStage.show();	
 	}
 	
-	//background
-	graphic.setFill(Color.Black);
-	graphic.fillRect(0,0, rowNum * 20, colNum * 20 );
+	public static void screen(GraphicsContext graphic) {
+		Frame frame = new Frame();
+		if (!frame.run) {
+			graphic.setFill(Color.CRIMSON);
+			graphic.setFont(new Font("", 50));
+			graphic.fillText("GAME OVER", 100, 250);
+			return;
+		}
+		
+		graphic.setFill(Color.GOLD);
+		graphic.setFont(new Font("", 30));
+		graphic.fillText("Score:" + frame.score, 10, 30);
+		
+		graphic.setFill(Color.DARKGREEN);
+		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
+	}
+		
 	
 	public static void main(String[] arg) {
 		//Frame frame = new Frame();
