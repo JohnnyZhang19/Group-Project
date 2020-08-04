@@ -218,6 +218,7 @@ public class Main extends Application{
 				continue start;
 			}
 		}
+
 		break;
 	}
 
