@@ -21,7 +21,8 @@ public class Frame{
 	int score = 0;
 	int listLength = 10;
 	Node[] obsList = new Node[listLength];
-	
+	boolean run = true;
+
 	
 
 	public int getScore() {
@@ -73,7 +74,6 @@ public class Frame{
 		Initialize();
 		printFrame();
 		Scanner scanner = new Scanner(System.in);
-		boolean run = true;
 		while (run) {
 			/**
 			 * Enter a direction to decide where the snake should go
