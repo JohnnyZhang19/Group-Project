@@ -25,39 +25,44 @@ import javafx.scene.text.Font;
 
 public class Main extends Application{
 	static Dir direction = Dir.left;
+
 	public static int actualRowNum = 30;
 	public static int actualColNum = 30;
 	public static int rowNum = actualRowNum+2;
 	public static int colNum = actualColNum+2;
 	List<Node> nodes = new ArrayList<Node>();
 	public static int nodeSize = 15;
+
 	public Snake snake = new Snake();
 	public Egg egg = new Egg();
 	public Obstacles obs = new Obstacles();
 	int score = 0;
 	int listLength = 10;
 	Node[] obsList = new Node[listLength];
+
 	
 	public enum Dir {
 		left, right, up, down
 	}
-	
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Frame newFrame = new Frame();
 		newFrame.Initialize(); //or refresh or reappear?
 		VBox root = new VBox();
+
 		Canvas aCanvas = new Canvas(rowNum * nodeSize-50, colNum * nodeSize-50);
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
 
 		ObservableList<String> options = 
 			    FXCollections.observableArrayList(
-			        "Option 1",
-			        "Option 2",
-			        "Option 3"
+			        "Easy",
+			        "Medium",
+			        "Difficult"
 			    );
 		root.getChildren().addAll(aCanvas ,new Label("Select level"), new ComboBox(options));
 /**		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
+
           public void handle(ActionEvent e) 
           { 
               if(level.getValue().equals("Easy")) {
@@ -71,6 +76,7 @@ public class Main extends Application{
               }
           }
 		};
+
 
 	*/	
 		
@@ -116,8 +122,13 @@ public class Main extends Application{
 		
 		graphic.setFill(Color.DARKGREEN);
 		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
+
 	}
 		
+	
+	//background
+	graphic.setFill(Color.Black);
+	graphic.fillRect(0,0, rowNum * 20, colNum * 20 );
 	
 	public static void main(String[] arg) {
 		//Frame frame = new Frame();

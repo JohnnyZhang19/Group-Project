@@ -22,6 +22,7 @@ public class Frame{
 	int listLength = 10;
 	Node[] obsList = new Node[listLength];
 	boolean run = true;
+
 	
 
 	public int getScore() {
