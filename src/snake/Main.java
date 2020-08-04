@@ -52,9 +52,9 @@ public class Main extends Application{
 
 		ObservableList<String> options = 
 			    FXCollections.observableArrayList(
-			        "Option 1",
-			        "Option 2",
-			        "Option 3"
+			        "Easy",
+			        "Medium",
+			        "Difficult"
 			    );
 		root.getChildren().addAll(aCanvas ,new Label("Select level"), new ComboBox(options));
 /**		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
