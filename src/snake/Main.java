@@ -26,7 +26,7 @@ import javafx.scene.text.Font;
 import java.util.Random;
 
 
-public class Main extends Application{
+public class Main extends Application {
 	static Dir direction = Dir.left;
 	static int eggX = 0;
 	static int eggY = 0;
@@ -44,6 +44,7 @@ public class Main extends Application{
 	int listLength = 10;
 	static int speed = 5;
 	Node[] obsList = new Node[listLength];
+	static List<Node> obstacle = new ArrayList<>();
 	static boolean gameOver = false;
 	
 	public enum Dir {
@@ -147,6 +148,7 @@ public class Main extends Application{
 			return;
 		}
 		
+		
 		for (int i = snake.size() - 1; i >= 1; i--) {
 			snake.get(i).x = snake.get(i - 1).x;
 			snake.get(i).y = snake.get(i - 1).y;
@@ -192,6 +194,7 @@ public class Main extends Application{
 			}
 		}
 		
+				
 		graphic.setFill(Color.GOLD);
 		graphic.setFont(new Font("", 30));
 		graphic.fillText("Score:" + frame.score, rowNum * (nodeSize - 10), colNum * (nodeSize - 10));
@@ -207,6 +210,7 @@ public class Main extends Application{
 			graphic.fillOval(aCanvas.x * nodeSize, aCanvas.y * nodeSize, nodeSize, nodeSize);
 		}
 	}
+		
 		
 	public static void startGame() {
 	start: while (true) {
