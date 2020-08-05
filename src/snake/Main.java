@@ -26,7 +26,7 @@ import javafx.scene.text.Font;
 import java.util.Random;
 
 
-public class Main extends Application {
+public class Main extends Application{
 	static Dir direction = Dir.left;
 	static int eggX = 0;
 	static int eggY = 0;
@@ -42,10 +42,11 @@ public class Main extends Application {
 	public Obstacles obs = new Obstacles();
 	int score = 0;
 	int listLength = 10;
-	static int speed = 5;
+	int speed;
 	Node[] obsList = new Node[listLength];
 	static List<Node> obstacle = new ArrayList<>();
 	static boolean gameOver = false;
+	int userChooseLevel;
 	
 	public enum Dir {
 		left, right, up, down
@@ -70,13 +71,7 @@ public class Main extends Application {
 		Canvas aCanvas = new Canvas(rowNum * nodeSize, colNum * nodeSize);
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
 
-		ObservableList<String> options = 
-			    FXCollections.observableArrayList(
-			        "Easy",
-			        "Medium",
-			        "Difficult"
-			    );
-		root.getChildren().addAll(aCanvas ,new Label("Select level"), new ComboBox(options));
+		root.getChildren().addAll(aCanvas);
 		
 		new AnimationTimer() {
 			long lastSceen = 0;
@@ -87,6 +82,15 @@ public class Main extends Application {
 					screen(graphic);
 					return;
 				}
+				
+		//  Different levels for snake:
+		//  Level 0: easy, level 1: normal; level 2: hard
+		//  We can create as many level as we want depending on the speed
+				
+				userChooseLevel = 2;
+				if (userChooseLevel == 0) speed = 5;
+				if (userChooseLevel == 1) speed = 10;
+				if (userChooseLevel == 2) speed = 15;
 				if (now - lastSceen > 1000000000 / speed) {
 					lastSceen = now;
 					screen(graphic);
@@ -95,23 +99,6 @@ public class Main extends Application {
 			
 
 		}.start();
-/**		EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() { 
-          public void handle(ActionEvent e) 
-          { 
-              if(level.getValue().equals("Easy")) {
- //           	  Frame.setListLength(10);
-              }
-              if(level.getValue().equals("Medium")) {
-            	  //Frame.setListLength(20);
-              } 
-              if(level.getValue().equals("Difficult")) {
-            	  //Frame.setListLength(30);
-              }
-          }
-		};
-
-	*/	
-		
 
 		
 		
@@ -132,6 +119,7 @@ public class Main extends Application {
 
 			});
 		
+
 		snake.add(new Node(rowNum/2,colNum/2,5));
 		snake.add(new Node(rowNum/2,colNum/2 - 1,3));
 		primaryStage.setScene(scene);
@@ -199,15 +187,15 @@ public class Main extends Application {
 		graphic.setFont(new Font("", 30));
 		graphic.fillText("Score:" + frame.score, rowNum * (nodeSize - 10), colNum * (nodeSize - 10));
 		
-		graphic.setFill(Color.DARKGREEN);
+		graphic.setFill(Color.BLACK);
 		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
 		
-		graphic.setFill(Color.FUCHSIA);
+		graphic.setFill(Color.YELLOW);
 		graphic.fillOval(eggX * nodeSize, eggY * nodeSize, nodeSize, nodeSize);
 		
 		for (Node aCanvas : snake) {
-			graphic.setFill(Color.CORAL);
-			graphic.fillOval(aCanvas.x * nodeSize, aCanvas.y * nodeSize, nodeSize, nodeSize);
+			graphic.setFill(Color.AQUA);
+			graphic.fillRect(aCanvas.x * nodeSize, aCanvas.y * nodeSize, nodeSize, nodeSize);
 		}
 	}
 		
@@ -216,7 +204,6 @@ public class Main extends Application {
 	start: while (true) {
 		eggX = rand.nextInt(rowNum);
 		eggY = rand.nextInt(colNum);
-		
 		for (Node aCanvas : snake) {
 			if (aCanvas.x == eggX && aCanvas.y == eggY) {
 				continue start;
