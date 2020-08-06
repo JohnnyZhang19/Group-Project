@@ -4,13 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-
-import application.View;
 import javafx.animation.AnimationTimer;
+import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -19,8 +14,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
-public class GameView extends View{
+public class Main extends Application{
 	static Dir direction = Dir.left;
 	static int eggX;
 	static int eggY;
@@ -43,19 +39,7 @@ public class GameView extends View{
 	public enum Dir {
 		left, right, up, down
 	}
-	
-	public static class Node {
-		int x;
-		int y;
-		int type;
 
-		public Node(int x, int y, int type) {
-			this.x = x;
-			this.y = y;
-			this.type = type;
-		}
-
-	}
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -126,7 +110,6 @@ public class GameView extends View{
 	}
 	
 	public static void screen(GraphicsContext graphic) {
-		Frame frame = new Frame();
 		if (gameOver) {
 			graphic.setFill(Color.CRIMSON);
 			graphic.setFont(new Font("", 50));
@@ -178,7 +161,7 @@ public class GameView extends View{
 
 		}
 
-		// eat food
+		// eat Egg
 		if (eggX == snake.get(0).x && eggY == snake.get(0).y) {
 			snake.addLast(new Node(-1, -1, 3));
 			obstacle.add(new Node(obsX, obsY, 4));
@@ -187,7 +170,7 @@ public class GameView extends View{
 			startGame();
 		}
 
-		// self destroy and destory when hit the obstacles
+		// self destroy and destroy when hit the obstacles
 		for (int i = 1; i < snake.size(); i++) {
 			if (snake.get(0).x == snake.get(i).x && snake.get(0).y == snake.get(i).y) {
 				gameOver = true;
@@ -238,7 +221,7 @@ public class GameView extends View{
 			
 			break;
 	}
-	}	
+	}
 
 	
 }
