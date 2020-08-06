@@ -114,7 +114,7 @@ public class Controller extends Application{
 	 * Launch this application.
 	 * @param arg
 	 */
-	public static void GameView(String[] arg) {
+	public static void Main(String[] arg) {
 		launch(arg);
 	}
 	
