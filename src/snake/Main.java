@@ -5,51 +5,39 @@ import java.util.LinkedList;
 import java.util.List;
 
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import application.View;
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ComboBoxBase;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import java.util.Random;
-import javafx.scene.control.Button;
 
-
-public class Main extends Application {
-
+public class GameView extends View{
 	static Dir direction = Dir.left;
-	static int eggX = 0;
-	static int eggY = 0;
-	static Random rand = new Random();
-	public static int actualRowNum = 30;
-	public static int actualColNum = 30;
+	static int eggX;
+	static int eggY;
+	static int obsX;
+	static int obsY;
+	public static int actualRowNum = 28;
+	public static int actualColNum = 28;
 	public static int rowNum = actualRowNum+2;
 	public static int colNum = actualColNum+2;
 	static LinkedList<Node> snake = new LinkedList<>();
-	public static int nodeSize = 15;
-	public Snake aSnake = new Snake();
-	public Egg egg = new Egg();
-	public Obstacles obs = new Obstacles();
-	int score = 0;
-	int listLength = 10;
-	int speed;
-	Node[] obsList = new Node[listLength];
+	public static int nodeSize = 20;
+	static int score = 0;
+	static int listLength = 10;
+	static int speed;
 	static List<Node> obstacle = new ArrayList<>();
 	static boolean gameOver = false;
-	public static int userChooseLevel = 0;
+	static int userChooseLevel;
 	
 
 	public enum Dir {
