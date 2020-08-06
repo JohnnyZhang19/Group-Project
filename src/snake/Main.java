@@ -1,7 +1,8 @@
-package application;
+package snake;
+
+
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -17,8 +18,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ComboBoxBase;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -38,12 +37,12 @@ public class Main extends Application{
 	public static int actualColNum = 30;
 	public static int rowNum = actualRowNum+2;
 	public static int colNum = actualColNum+2;
-	static LinkedList<Node> snake = new LinkedList<>();
+	static List<Node> snake = new ArrayList<>();
 	public static int nodeSize = 15;
 	public Snake aSnake = new Snake();
 	public Egg egg = new Egg();
 	public Obstacles obs = new Obstacles();
-	static int score = 0;
+	int score = 0;
 	int listLength = 10;
 	int speed;
 	Node[] obsList = new Node[listLength];
@@ -74,9 +73,7 @@ public class Main extends Application{
 		Canvas aCanvas = new Canvas(rowNum * nodeSize, colNum * nodeSize);
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
 
-		ImageView image = new ImageView("https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297_1280.jpg");
-		
-		root.getChildren().addAll(aCanvas,image);
+		root.getChildren().addAll(aCanvas);
 		
 		new AnimationTimer() {
 			long lastSceen = 0;
@@ -93,15 +90,16 @@ public class Main extends Application{
 		//  We can create as many level as we want depending on the speed
 				
 				userChooseLevel = 2;
-				if (userChooseLevel == 0) speed = 10;
-				if (userChooseLevel == 1) speed = 20;
-				if (userChooseLevel == 2) speed = 30;
+				if (userChooseLevel == 0) speed = 5;
+				if (userChooseLevel == 1) speed = 10;
+				if (userChooseLevel == 2) speed = 15;
 				if (now - lastSceen > 1000000000 / speed) {
 					lastSceen = now;
 					screen(graphic);
 				}
 			}
 			
+
 		}.start();
 
 		
@@ -123,6 +121,7 @@ public class Main extends Application{
 
 			});
 		
+
 		snake.add(new Node(rowNum/2,colNum/2,5));
 		snake.add(new Node(rowNum/2,colNum/2 - 1,3));
 		primaryStage.setScene(scene);
@@ -175,7 +174,6 @@ public class Main extends Application{
 		// eat food
 		if (eggX == snake.get(0).x && eggY == snake.get(0).y) {
 			snake.add(new Node(-1, -1, 3));
-			score++;
 			startGame();
 		}
 
@@ -185,6 +183,11 @@ public class Main extends Application{
 				gameOver = true;
 			}
 		}
+		
+				
+		graphic.setFill(Color.GOLD);
+		graphic.setFont(new Font("", 30));
+		graphic.fillText("Score:" + frame.score, rowNum * (nodeSize - 10), colNum * (nodeSize - 10));
 		
 		graphic.setFill(Color.BLACK);
 		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
@@ -196,9 +199,6 @@ public class Main extends Application{
 			graphic.setFill(Color.AQUA);
 			graphic.fillRect(aCanvas.x * nodeSize, aCanvas.y * nodeSize, nodeSize, nodeSize);
 		}
-		graphic.setFill(Color.GOLD);
-		graphic.setFont(new Font("", 30));
-		graphic.fillText("Score: " + score, actualRowNum * (nodeSize - 14), actualColNum * (nodeSize - 14));
 	}
 		
 		
@@ -217,11 +217,50 @@ public class Main extends Application{
 
 		
 	}	
+	
+	
+ /**
+     public class Main extends Application{
+  
+    	
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		VBox root = new VBox (10);
+		Frame frame = new Frame(Frame.rowNum, Frame.colNum);
+		root.setPadding(new Insets(10));
+		frame.addSnake(new Snake(new Node(Frame.rowNum/2,Frame.colNum/2,5),new Node(Frame.rowNum/2,Frame.colNum/2 - 1,3)));
+		
+
+		
+		AnimationTimer timer = new AnimationTimer() {
+		//	long then = 0;
+			@Override
+			public void handle(long now) {
+		//		if (now - then > 1000000000 / 10) {
+		//			then = now;
+
+				}
+				
+			
+			
+		};
+		timer.start();
+		
+		
+		root.getChildren().add(frame);
+		Scene scene = new Scene(root);
+		
+		primaryStage.setResizable(false);
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("SNAKE FRENZY");
+		
+		primaryStage.show();
+	}
+*/
 	public static void main(String[] arg) {
 		//Frame frame = new Frame();
 		//frame.run();
 		launch(arg);
 	}
-	
-
 	}
+
