@@ -3,30 +3,24 @@ package snake;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 /**
  * this frame class is to compile all other class, and to make the game run
  * @author Zonglin Zhang UCID: 30020965
  *
  */
 public class Frame{
-	public int actualRowNum = 30;
-	public int actualColNum = 30;
-	public int rowNum = actualRowNum+2;
-	public int colNum = actualColNum+2;
+	public static int actualRowNum = 30;
+	public static int actualColNum = 30;
+	public static int rowNum = actualRowNum+2;
+	public static int colNum = actualColNum+2;
 	List<Node> nodes = new ArrayList<Node>();
 	public Snake snake = new Snake();
 	public Egg egg = new Egg();
 	public Obstacles obs = new Obstacles();
 	int score = 0;
-	int listLength = 10;
-	Node[] obsList = new Node[listLength];
-	boolean run = true;
+	Node[] obsList = new Node[10];
 	
-
-	public int getScore() {
-		return score;
-	}
+	
 
 	public List<Node> getNodes() {
 		return nodes;
@@ -38,15 +32,6 @@ public class Frame{
 
 	public void setActualRowNum(int actualRowNum) {
 		this.actualRowNum = actualRowNum;
-	}
-
-
-	public int getListLength() {
-		return listLength;
-	}
-
-	public void setListLength(int listLength) {
-		this.listLength = listLength;
 	}
 
 	public int getActualColNum() {
@@ -73,6 +58,7 @@ public class Frame{
 		Initialize();
 		printFrame();
 		Scanner scanner = new Scanner(System.in);
+		boolean run = true;
 		while (run) {
 			/**
 			 * Enter a direction to decide where the snake should go
@@ -173,7 +159,7 @@ public class Frame{
 	 * Every time the snake move and the egg appear, this frame will 
 	 * print once to refresh location of the nodes of snakes and egg.
 	 */
-	void refresh() {
+	private void refresh() {
 		nodes.clear();
 
 		for(int i = 0; i < getRowNum(); i++) {
@@ -289,7 +275,7 @@ public class Frame{
 	 * To initialize the position of snake and egg.
 	 */
 	public void Initialize() {
-		snake = new Snake(new Node(rowNum/2,colNum/2,5),new Node(rowNum/2,colNum/2 - 1,3));
+		snake = new Snake(new Node(2,4,5),new Node(2,3,3));
 		egg = new Egg(new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),2));
 		
 		for(int i = 0; i < getRowNum(); i++) {
@@ -327,7 +313,7 @@ public class Frame{
 		Node eggLocation = egg.getLocation();
 		nodes.set(eggLocation.getX() + eggLocation.getY() *rowNum,new Node(2));	
 		
-		for(int i = 0; i < obsList.length; i ++) {
+		for(int i = 0; i < 5; i ++) {
 			obs = new Obstacles(new Node((int)(Math.random()*(rowNum-4)+2),(int)(Math.random()*(colNum-4)+2),4));
 			if(!(obs.getLocationO().getX() == snake.getBody().element().getX() && obs.getLocationO().getY() == snake.getBody().element().getY()) ||
 					!(obs.getLocationO().getX() == egg.getLocation().getX() && obs.getLocationO().getX() == egg.getLocation().getX())) {
