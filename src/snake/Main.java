@@ -76,11 +76,11 @@ public class Main extends Application{
 		root.getChildren().addAll(aCanvas);
 		
 		new AnimationTimer() {
-			long lastSceen = 0;
+			long then = 0;
 
 			public void handle(long now) {
-				if (lastSceen == 0) {
-					lastSceen = now;
+				if (then == 0) {
+					then = now;
 					screen(graphic);
 					return;
 				}
@@ -93,8 +93,8 @@ public class Main extends Application{
 				if (userChooseLevel == 0) speed = 5;
 				if (userChooseLevel == 1) speed = 10;
 				if (userChooseLevel == 2) speed = 15;
-				if (now - lastSceen > 1000000000 / speed) {
-					lastSceen = now;
+				if (now - then > 1000000000 / speed) {
+					then = now;
 					screen(graphic);
 				}
 			}
