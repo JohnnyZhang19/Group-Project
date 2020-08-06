@@ -8,16 +8,9 @@ import java.util.List;
 
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ComboBoxBase;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -79,20 +72,15 @@ public class Main extends Application{
 			long then = 0;
 
 			public void handle(long now) {
-				if (then == 0) {
-					then = now;
-					screen(graphic);
-					return;
-				}
-				
+	
 		//  Different levels for snake:
 		//  Level 0: easy, level 1: normal; level 2: hard
 		//  We can create as many level as we want depending on the speed
 				
 				userChooseLevel = 2;
 				if (userChooseLevel == 0) speed = 5;
-				if (userChooseLevel == 1) speed = 10;
-				if (userChooseLevel == 2) speed = 15;
+				if (userChooseLevel == 1) speed = 15;
+				if (userChooseLevel == 2) speed = 25;
 				if (now - then > 1000000000 / speed) {
 					then = now;
 					screen(graphic);

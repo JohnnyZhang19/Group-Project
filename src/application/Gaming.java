@@ -96,11 +96,7 @@ public class Gaming extends View{
 			long lastSceen = 0;
 
 			public void handle(long now) {
-				if (lastSceen == 0) {
-					lastSceen = now;
-					screen(graphic);
-					return;
-				}
+
 				if (now - lastSceen > 1000000000 / speed) {
 					lastSceen = now;
 					screen(graphic);
