@@ -17,7 +17,7 @@ public class Frame{
 	public Snake snake = new Snake();
 	public Egg egg = new Egg();
 	public Obstacles obs = new Obstacles();
-	int score = 0;
+	private int score = 0;
 	Node[] obsList = new Node[10];
 	
 	
@@ -103,7 +103,7 @@ public class Frame{
 				}else {
 					eat(2);
 				}
-				score++;
+				setScore(getScore() + 1);
 
 			}
 			
@@ -268,7 +268,7 @@ public class Frame{
 		/**
 		 * to print score
 		 */
-		System.out.println(score);
+		System.out.println(getScore());
 	}
 
 	/**
@@ -351,6 +351,14 @@ public class Frame{
 				obsList[i] = obsLocation;
 			}
 		}
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
 }

@@ -187,7 +187,7 @@ public class Main extends Application{
 				
 		graphic.setFill(Color.GOLD);
 		graphic.setFont(new Font("", 30));
-		graphic.fillText("Score:" + frame.score, rowNum * (nodeSize - 10), colNum * (nodeSize - 10));
+		graphic.fillText("Score:" + frame.getScore(), rowNum * (nodeSize - 10), colNum * (nodeSize - 10));
 		
 		graphic.setFill(Color.BLACK);
 		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
