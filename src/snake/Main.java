@@ -1,8 +1,7 @@
-package snake;
-
-
+package application;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -18,6 +17,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ComboBoxBase;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
@@ -33,13 +34,16 @@ public class Main extends Application{
 	static int eggX = 0;
 	static int eggY = 0;
 	static Random rand = new Random();
-
-	static List<Node> node = new ArrayList<>();
+	public static int actualRowNum = 30;
+	public static int actualColNum = 30;
+	public static int rowNum = actualRowNum+2;
+	public static int colNum = actualColNum+2;
+	static LinkedList<Node> snake = new LinkedList<>();
 	public static int nodeSize = 15;
 	public Snake aSnake = new Snake();
 	public Egg egg = new Egg();
 	public Obstacles obs = new Obstacles();
-	int score = 0;
+	static int score = 0;
 	int listLength = 10;
 	int speed;
 	Node[] obsList = new Node[listLength];
@@ -67,10 +71,12 @@ public class Main extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		startGame();
 		VBox root = new VBox();
-		Canvas aCanvas = new Canvas(Frame.rowNum * nodeSize, Frame.colNum * nodeSize);
+		Canvas aCanvas = new Canvas(rowNum * nodeSize, colNum * nodeSize);
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
 
-		root.getChildren().addAll(aCanvas);
+		ImageView image = new ImageView("https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297_1280.jpg");
+		
+		root.getChildren().addAll(aCanvas,image);
 		
 		new AnimationTimer() {
 			long lastSceen = 0;
@@ -87,21 +93,20 @@ public class Main extends Application{
 		//  We can create as many level as we want depending on the speed
 				
 				userChooseLevel = 2;
-				if (userChooseLevel == 0) speed = 5;
-				if (userChooseLevel == 1) speed = 10;
-				if (userChooseLevel == 2) speed = 15;
+				if (userChooseLevel == 0) speed = 10;
+				if (userChooseLevel == 1) speed = 20;
+				if (userChooseLevel == 2) speed = 30;
 				if (now - lastSceen > 1000000000 / speed) {
 					lastSceen = now;
 					screen(graphic);
 				}
 			}
 			
-
 		}.start();
 
 		
 		
-		Scene scene = new Scene(root, Frame.rowNum * nodeSize, Frame.colNum * nodeSize);
+		Scene scene = new Scene(root, rowNum * nodeSize, colNum * nodeSize);
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
 				if (key.getCode() == KeyCode.W) {
 					direction = Dir.up;
@@ -118,9 +123,8 @@ public class Main extends Application{
 
 			});
 		
-
-		node.add(new Node(Frame.rowNum/2,Frame.colNum/2,5));
-		node.add(new Node(Frame.rowNum/2,Frame.colNum/2 - 1,3));
+		snake.add(new Node(rowNum/2,colNum/2,5));
+		snake.add(new Node(rowNum/2,colNum/2 - 1,3));
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("SNAKE FRENZY");
 		primaryStage.show();	
@@ -136,32 +140,32 @@ public class Main extends Application{
 		}
 		
 		
-		for (int i = node.size() - 1; i >= 1; i--) {
-			node.get(i).x = node.get(i - 1).x;
-			node.get(i).y = node.get(i - 1).y;
+		for (int i = snake.size() - 1; i >= 1; i--) {
+			snake.get(i).x = snake.get(i - 1).x;
+			snake.get(i).y = snake.get(i - 1).y;
 		}
 		switch (direction) {
 		case up:
-			node.get(0).y--;
-			if (node.get(0).y < 0) {
+			snake.get(0).y--;
+			if (snake.get(0).y < 0) {
 				gameOver = true;
 			}
 			break;
 		case down:
-			node.get(0).y++;
-			if (node.get(0).y > Frame.colNum) {
+			snake.get(0).y++;
+			if (snake.get(0).y > colNum) {
 				gameOver = true;
 			}
 			break;
 		case left:
-			node.get(0).x--;
-			if (node.get(0).x < 0) {
+			snake.get(0).x--;
+			if (snake.get(0).x < 0) {
 				gameOver = true;
 			}
 			break;
 		case right:
-			node.get(0).x++;
-			if (node.get(0).x > Frame.rowNum) {
+			snake.get(0).x++;
+			if (snake.get(0).x > rowNum) {
 				gameOver = true;
 			}
 			break;
@@ -169,41 +173,40 @@ public class Main extends Application{
 		}
 
 		// eat food
-		if (eggX == node.get(0).x && eggY == node.get(0).y) {
-			node.add(new Node(-1, -1, 3));
+		if (eggX == snake.get(0).x && eggY == snake.get(0).y) {
+			snake.add(new Node(-1, -1, 3));
+			score++;
 			startGame();
 		}
 
 		// self destroy
-		for (int i = 1; i < node.size(); i++) {
-			if (node.get(0).x == node.get(i).x && node.get(0).y == node.get(i).y) {
+		for (int i = 1; i < snake.size(); i++) {
+			if (snake.get(0).x == snake.get(i).x && snake.get(0).y == snake.get(i).y) {
 				gameOver = true;
 			}
 		}
 		
-				
-		graphic.setFill(Color.GOLD);
-		graphic.setFont(new Font("", 30));
-		graphic.fillText("Score:" + frame.score, Frame.rowNum * (nodeSize - 10), Frame.colNum * (nodeSize - 10));
-		
 		graphic.setFill(Color.BLACK);
-		graphic.fillRect(0, 0,  Frame.rowNum * nodeSize, Frame.colNum * nodeSize);
+		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
 		
 		graphic.setFill(Color.YELLOW);
 		graphic.fillOval(eggX * nodeSize, eggY * nodeSize, nodeSize, nodeSize);
 		
-		for (Node aCanvas : node) {
+		for (Node aCanvas : snake) {
 			graphic.setFill(Color.AQUA);
 			graphic.fillRect(aCanvas.x * nodeSize, aCanvas.y * nodeSize, nodeSize, nodeSize);
 		}
+		graphic.setFill(Color.GOLD);
+		graphic.setFont(new Font("", 30));
+		graphic.fillText("Score: " + score, actualRowNum * (nodeSize - 14), actualColNum * (nodeSize - 14));
 	}
 		
 		
 	public static void startGame() {
 	start: while (true) {
-		eggX = rand.nextInt(Frame.rowNum);
-		eggY = rand.nextInt(Frame.colNum);
-		for (Node aCanvas : node) {
+		eggX = rand.nextInt(rowNum);
+		eggY = rand.nextInt(colNum);
+		for (Node aCanvas : snake) {
 			if (aCanvas.x == eggX && aCanvas.y == eggY) {
 				continue start;
 			}
@@ -214,50 +217,11 @@ public class Main extends Application{
 
 		
 	}	
-	
-	
- /**
-     public class Main extends Application{
-  
-    	
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		VBox root = new VBox (10);
-		Frame frame = new Frame(Frame.rowNum, Frame.colNum);
-		root.setPadding(new Insets(10));
-		frame.addSnake(new Snake(new Node(Frame.rowNum/2,Frame.colNum/2,5),new Node(Frame.rowNum/2,Frame.colNum/2 - 1,3)));
-		
-
-		
-		AnimationTimer timer = new AnimationTimer() {
-		//	long then = 0;
-			@Override
-			public void handle(long now) {
-		//		if (now - then > 1000000000 / 10) {
-		//			then = now;
-
-				}
-				
-			
-			
-		};
-		timer.start();
-		
-		
-		root.getChildren().add(frame);
-		Scene scene = new Scene(root);
-		
-		primaryStage.setResizable(false);
-		primaryStage.setScene(scene);
-		primaryStage.setTitle("SNAKE FRENZY");
-		
-		primaryStage.show();
-	}
-*/
 	public static void main(String[] arg) {
 		//Frame frame = new Frame();
 		//frame.run();
 		launch(arg);
 	}
-	}
+	
 
+	}
