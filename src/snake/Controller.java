@@ -30,10 +30,17 @@ import javafx.scene.layout.*;
 import javafx.scene.image.*;
 import javafx.scene.paint.Color;
 
-
+/**
+ * This class is to show the first scene and connect
+ * the second scene together.
+ * @author Yuzhe Zhou UCID: 30102199
+ *
+ */
 public class Controller extends Application{
 	
-
+	/**
+	  * To set some button and label in the first scene.
+	  */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
        
@@ -43,7 +50,10 @@ public class Controller extends Application{
 
         SplitMenuButton menubutton = new SplitMenuButton();
 
-       
+        /**
+         * When user click different level, the speed of snake will 
+         * be different
+         */
         lv1.setOnAction(actionEvent ->  {
             GUISnake.userChooseLevel = 0;
         menubutton.setText("selected level 1");
@@ -56,26 +66,21 @@ public class Controller extends Application{
             GUISnake.userChooseLevel = 2;
         menubutton.setText("selected level 3");
         });
+       
         menubutton.setText("select level");
         menubutton.getItems().addAll(lv1, lv2, lv3);
         menubutton.setLayoutX(15*6);
         menubutton.setLayoutY(13*6);
-        /*
-         *
-            try{
-            GUISnake s = new GUISnake();
-            s.start(primaryStage);
-            GUISnake.userChooseLevel = 2;
-            }
-            catch (Exception e){
-                    e.printStackTrace();
-            }
+
+        /**
+         * Create start button, when click this button 
+         * interface will switch to the second scene.
          */
-        Button startButton = new Button("Start");
+        Button startButton = new Button("START!!");
+        startButton.setTextFill(Color.RED);
         startButton.setOnAction(actionEvent ->  {
             try{
             GUISnake s = new GUISnake();
-            //GUISnake.userChooseLevel = selection;
             s.start(primaryStage);
             }
             catch (Exception e){
@@ -83,11 +88,10 @@ public class Controller extends Application{
             }
             }
         );
-        VBox startbox = new VBox(menubutton, startButton);
         Pane border = new Pane();
 
-        menubutton.relocate(GUISnake.rowNum * GUISnake.nodeSize/2  - 20, GUISnake.colNum * GUISnake.nodeSize/2);
-        startButton.relocate(GUISnake.rowNum * GUISnake.nodeSize/2 , GUISnake.colNum * GUISnake.nodeSize/2 + 50);
+        menubutton.relocate(GUISnake.rowNum * GUISnake.nodeSize/2  - 35, GUISnake.colNum * GUISnake.nodeSize/2);
+        startButton.relocate(GUISnake.rowNum * GUISnake.nodeSize/2 -35 , GUISnake.colNum * GUISnake.nodeSize/2 + 50);
         startButton.setMinWidth(80);
         startButton.setMinHeight(30);
 
@@ -95,14 +99,14 @@ public class Controller extends Application{
 		Canvas aCanvas = new Canvas(GUISnake.rowNum * GUISnake.nodeSize, GUISnake.colNum * GUISnake.nodeSize);
 
         Label label = new Label("Levels: ");
-        label.setLayoutX(GUISnake.rowNum * GUISnake.nodeSize/2 -60);
+        label.setLayoutX(GUISnake.rowNum * GUISnake.nodeSize/2 -80);
         label.setLayoutY(GUISnake.colNum * GUISnake.nodeSize/2 );
-        label.setTextFill(Color.BLACK);
+        label.setTextFill(Color.LIGHTBLUE);
         
         Label titleLabel = new Label("Snake Frenzy");
         titleLabel.setLayoutX(GUISnake.rowNum*GUISnake.nodeSize/2 -40);
         titleLabel.setLayoutY(GUISnake.colNum*GUISnake.nodeSize/2 -70);
-        titleLabel.setTextFill(Color.BLACK);
+        titleLabel.setTextFill(Color.RED);
 	
 		border.getChildren().addAll(aCanvas);
         border.getChildren().add(menubutton);
@@ -110,23 +114,26 @@ public class Controller extends Application{
         border.getChildren().add(titleLabel);
         border.getChildren().add(startButton);
 
-
-		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
+		/**
+		 * Insert an image.
+		 */
+        GraphicsContext graphic = aCanvas.getGraphicsContext2D();
         Image background = new Image("https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297_1280.jpg");
         graphic.drawImage(background,0,0,GUISnake.rowNum * GUISnake.nodeSize, GUISnake.colNum * GUISnake.nodeSize);
 
-        //Scene menuscene = new Scene(startbox, GUISnake.rowNum * GUISnake.nodeSize, GUISnake.colNum * GUISnake.nodeSize);
         Scene menuscene = new Scene(border, GUISnake.rowNum * GUISnake.nodeSize, GUISnake.colNum * GUISnake.nodeSize);
         primaryStage.setScene(menuscene);
 		primaryStage.setTitle("SNAKE FRENZY");
 		primaryStage.show();	
 	}
-
+	
+	/**
+	 * Launch this application.
+	 * @param arg
+	 */
 	public static void main(String[] arg) {
-		//Frame frame = new Frame();
-		//frame.run();
 		launch(arg);
 	}
 	
 
-	}
+}
