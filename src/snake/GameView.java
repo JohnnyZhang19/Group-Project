@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
@@ -42,8 +43,8 @@ public class GameView extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		
 		startGame();
-        ///*
 		VBox root = new VBox();
 		Canvas aCanvas = new Canvas(rowNum * nodeSize, colNum * nodeSize);
 	
@@ -102,12 +103,11 @@ public class GameView extends Application{
 		 */
 		snake.add(new Node(rowNum/2,colNum/2,5));
 		snake.add(new Node(rowNum/2,colNum/2 - 1,3));
-
-
+		
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("SNAKE FRENZY");
 		primaryStage.show();	
-        //*/
+
 	}
 	
 	public static void screen(GraphicsContext graphic) {
@@ -189,8 +189,11 @@ public class GameView extends Application{
 		/**
 		 * set the background color
 		 */
-		graphic.setFill(Color.BLACK);
-		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
+//		graphic.setFill(Color.BLACK);
+//		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
+		Image background = new Image("https://lh3.googleusercontent.com/proxy/msyXR4BR4h5tTxZNB2qLLrBsoTYdqBt9HEjaeP3_"
+				+ "JiNmFvWBjKQqOtPMGJ6FkYDsKLCDZf0fU-NA-WxTg_vPA3LXQz3Fsfa8NxviYDrL3Z_OQS4izQc");
+        graphic.drawImage(background,0,0,GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
 		
 		/**
 		 * show the color, location of egg in the map

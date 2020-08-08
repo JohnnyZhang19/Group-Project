@@ -2,6 +2,8 @@ package application;
 
 
 
+import java.io.File;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -9,10 +11,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.RadialGradient;
 import javafx.scene.text.Font;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.image.*;
 
 /**
@@ -34,8 +37,16 @@ public class Controller extends Application{
         MenuItem lv3 = new MenuItem(" lv 3");
 
         SplitMenuButton menubutton = new SplitMenuButton();
-
+        
         /**
+         * Add BGM in game.
+         */
+        String musicplay = "src/application/BGM.mp3";
+		Media bgm = new Media(new File(musicplay).toURI().toString());  
+	    MediaPlayer mediaPlayer = new MediaPlayer(bgm);  
+	    mediaPlayer.setAutoPlay(true); 
+        
+	    /**
          * When user click different level, the speed of snake will 
          * be different
          */
