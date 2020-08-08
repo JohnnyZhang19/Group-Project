@@ -1,4 +1,4 @@
-package snake;
+package application;
 
 
 
@@ -9,6 +9,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.text.Font;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.image.*;
@@ -59,7 +61,7 @@ public class Controller extends Application{
          * Create start button, when click this button 
          * interface will switch to the second scene.
          */
-        Button startButton = new Button("START!!");
+        Button startButton = new Button("S T A R T !!");
         startButton.setTextFill(Color.RED);
         startButton.setOnAction(actionEvent ->  {
             try{
@@ -74,22 +76,25 @@ public class Controller extends Application{
         Pane border = new Pane();
 
         menubutton.relocate(GameView.rowNum * GameView.nodeSize/2  - 35, GameView.colNum * GameView.nodeSize/2);
-        startButton.relocate(GameView.rowNum * GameView.nodeSize/2 -35 , GameView.colNum * GameView.nodeSize/2 + 50);
-        startButton.setMinWidth(80);
+        menubutton.setMinHeight(30);
+        startButton.relocate(GameView.rowNum * GameView.nodeSize/2 -60 , GameView.colNum * GameView.nodeSize/2 + 70);
+        startButton.setMinWidth(120);
         startButton.setMinHeight(30);
 
 
 		Canvas aCanvas = new Canvas(GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
 
         Label label = new Label("Levels: ");
-        label.setLayoutX(GameView.rowNum * GameView.nodeSize/2 -80);
-        label.setLayoutY(GameView.colNum * GameView.nodeSize/2 );
+        label.setFont(new Font(label.getFont().getName(), Font.getDefault().getSize() + 10));
+        label.relocate(GameView.rowNum * GameView.nodeSize/2 -110, GameView.colNum * GameView.nodeSize/2 - 2);
         label.setTextFill(Color.LIGHTBLUE);
         
         Label titleLabel = new Label("Snake Frenzy");
-        titleLabel.setLayoutX(GameView.rowNum*GameView.nodeSize/2 -40);
-        titleLabel.setLayoutY(GameView.colNum*GameView.nodeSize/2 -70);
+        titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.getDefault().getSize() + 30));
+        titleLabel.setLayoutX(GameView.rowNum*GameView.nodeSize/2 -120);
+        titleLabel.setLayoutY(GameView.colNum*GameView.nodeSize/2 -120);
         titleLabel.setTextFill(Color.RED);
+        
 	
 		border.getChildren().addAll(aCanvas);
         border.getChildren().add(menubutton);
@@ -114,7 +119,7 @@ public class Controller extends Application{
 	 * Launch this application.
 	 * @param arg
 	 */
-	public static void Main(String[] arg) {
+	public static void main(String[] arg) {
 		launch(arg);
 	}
 	

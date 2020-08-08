@@ -1,5 +1,5 @@
 
-package snake;
+package application;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -117,7 +117,7 @@ public class GameView extends Application{
 			 */
 			graphic.setFill(Color.CRIMSON);
 			graphic.setFont(new Font("", 50));
-			graphic.fillText("GAME OVER", 100, 250);
+			graphic.fillText("GAME OVER", 150, 300);
 			return;
 		}
 		
@@ -224,7 +224,7 @@ public class GameView extends Application{
 		 */
 		graphic.setFill(Color.GOLD);
 		graphic.setFont(new Font("", 20));
-		graphic.fillText("Score: " + score, actualRowNum * (nodeSize - 5), actualColNum * (nodeSize - 5));
+		graphic.fillText("Score: " + score, actualRowNum * (nodeSize - 19.5), actualColNum * (nodeSize - 19));
 	}
 		
 		/**
