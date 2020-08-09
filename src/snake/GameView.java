@@ -1,5 +1,6 @@
 
 package snake;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -225,7 +226,8 @@ public class GameView extends Application{
 		 */
 //		graphic.setFill(Color.BLACK);
 //		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
-		Image background = new Image("https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297_1280.jpg");
+		String BC = "src/snake/GameViewBC.jpg";
+		Image background = new Image(new File(BC).toURI().toString());
         graphic.drawImage(background,0,0,GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);		
 		/**
 		 * show the color, location of egg in the map
@@ -254,7 +256,7 @@ public class GameView extends Application{
 		 * show the shape, location and color for the obstacles
 		 */
 		for(Node obs : obstacle) {
-			graphic.setFill(Color.BLACK);
+			graphic.setFill(Color.GAINSBORO);
 			graphic.fillRect(obs.x * nodeSize, obs.y * nodeSize, nodeSize, nodeSize);
 		}
 		/**
