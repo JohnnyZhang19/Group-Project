@@ -1,4 +1,4 @@
-package application;
+package snake;
 
 
 
@@ -41,7 +41,7 @@ public class Controller extends Application{
         /**
          * Add BGM in game.
          */
-        String musicplay = "src/application/BGM.mp3";
+        String musicplay = "src/snake/BGM.mp3";
 		Media bgm = new Media(new File(musicplay).toURI().toString());  
 	    MediaPlayer mediaPlayer = new MediaPlayer(bgm);  
 	    mediaPlayer.setAutoPlay(true); 
@@ -52,14 +52,17 @@ public class Controller extends Application{
          */
         lv1.setOnAction(actionEvent ->  {
             GameView.userChooseLevel = 0;
+            GameView.speed = 5;
         menubutton.setText("selected level 1");
         });
         lv2.setOnAction(actionEvent ->  {
             GameView.userChooseLevel = 1;
+            GameView.speed = 10;
         menubutton.setText("selected level 2");
         });
         lv3.setOnAction(actionEvent ->  {
             GameView.userChooseLevel = 2;
+            GameView.speed = 15;
         menubutton.setText("selected level 3");
         });
        

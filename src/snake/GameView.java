@@ -1,5 +1,5 @@
 
-package application;
+package snake;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,8 +19,10 @@ import javafx.stage.Stage;
 
 public class GameView extends Application{
 	static Dir direction = Dir.left;
-	static int eggX;
-	static int eggY;
+	static int egg1X;
+	static int egg1Y;
+	static int egg2X;
+	static int egg2Y;
 	static int obsX;
 	static int obsY;
 	public static int actualRowNum = 28;
@@ -35,16 +37,17 @@ public class GameView extends Application{
 	static boolean gameOver = false;
 	static int userChooseLevel;
 	static List<Node> nodes = new ArrayList<Node>();
+	static int level = 1;
+	static int snakeLengh = 2;
 
 	public enum Dir {
 		left, right, up, down
 	}
 
-	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		
 		startGame();
+        ///*
 		VBox root = new VBox();
 		Canvas aCanvas = new Canvas(rowNum * nodeSize, colNum * nodeSize);
 	
@@ -68,9 +71,9 @@ public class GameView extends Application{
 		//  We can create as many level as we want depending on the speed
 				
 				//userChooseLevel = 0;
-				if (userChooseLevel == 0) speed = 5;
-				if (userChooseLevel == 1) speed = 10;
-				if (userChooseLevel == 2) speed = 15;
+//				if (userChooseLevel == 0) speed = 5;
+//				if (userChooseLevel == 1) speed = 10;
+//				if (userChooseLevel == 2) speed = 15;
 				if (now - lastSceen > 1000000000 / speed) {
 					lastSceen = now;
 					screen(graphic);
@@ -84,16 +87,16 @@ public class GameView extends Application{
 		
 		Scene scene = new Scene(root, rowNum * nodeSize, colNum * nodeSize);
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
-				if (key.getCode() == KeyCode.W) {
+				if (key.getCode() == KeyCode.UP) {
 					direction = Dir.up;
 				}
-				if (key.getCode() == KeyCode.A) {
+				if (key.getCode() == KeyCode.LEFT) {
 					direction = Dir.left;
 				}
-				if (key.getCode() == KeyCode.S) {
+				if (key.getCode() == KeyCode.DOWN) {
 					direction = Dir.down;
 				}
-				if (key.getCode() == KeyCode.D) {
+				if (key.getCode() == KeyCode.RIGHT) {
 					direction = Dir.right;
 				}
 
@@ -103,11 +106,12 @@ public class GameView extends Application{
 		 */
 		snake.add(new Node(rowNum/2,colNum/2,5));
 		snake.add(new Node(rowNum/2,colNum/2 - 1,3));
-		
+
+
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("SNAKE FRENZY");
 		primaryStage.show();	
-
+        //*/
 	}
 	
 	public static void screen(GraphicsContext graphic) {
@@ -128,6 +132,18 @@ public class GameView extends Application{
 		for (int i = snake.size() - 1; i >= 1; i--) {
 			snake.get(i).x = snake.get(i - 1).x;
 			snake.get(i).y = snake.get(i - 1).y;
+		}
+		/**
+		 * avoid eggs and obstacle appear on snake body.
+		 */
+		for (int i = 0; i < snake.size(); i++) {
+			if(obsX == snake.element().x && obsY == snake.element().y) {
+				continue;
+			}else if (egg1X == snake.element().x && egg1Y == snake.element().y) {
+				continue;
+			}else if (egg2X == snake.element().x && egg2Y == snake.element().y) {
+				continue;
+			}
 		}
 		
 		/**
@@ -167,11 +183,26 @@ public class GameView extends Application{
 		}
 
 		// eat Egg, eat one egg score add one, speed increase one, and add one new random obstacle in the map
-		if (eggX == snake.get(0).x && eggY == snake.get(0).y) {
+		if (egg1X == snake.get(0).x && egg1Y == snake.get(0).y) {
 			snake.addLast(new Node(-1, -1, 3));
 			obstacle.add(new Node(obsX, obsY, 4));
 			score ++;
 			speed ++;
+			snakeLengh ++;
+			startGame();
+
+			if (score % 5 == 0) {
+				level ++;
+			}
+
+		}
+		if (egg2X == snake.get(0).x && egg2Y == snake.get(0).y) {
+			snake.removeLast();
+			snake.removeLast();
+			obstacle.add(new Node(obsX, obsY, 4));
+			obstacle.add(new Node(obsX, obsY, 4));
+			speed --;
+			snakeLengh -= 2;
 			startGame();
 		}
 
@@ -186,20 +217,24 @@ public class GameView extends Application{
 				}
 			}
 		}
+		if (snake.size() < 2) {
+			gameOver = true;
+		}
 		/**
 		 * set the background color
 		 */
 //		graphic.setFill(Color.BLACK);
 //		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
-		Image background = new Image("https://lh3.googleusercontent.com/proxy/msyXR4BR4h5tTxZNB2qLLrBsoTYdqBt9HEjaeP3_"
-				+ "JiNmFvWBjKQqOtPMGJ6FkYDsKLCDZf0fU-NA-WxTg_vPA3LXQz3Fsfa8NxviYDrL3Z_OQS4izQc");
-        graphic.drawImage(background,0,0,GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
-		
+		Image background = new Image("https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297_1280.jpg");
+        graphic.drawImage(background,0,0,GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);		
 		/**
 		 * show the color, location of egg in the map
 		 */
 		graphic.setFill(Color.YELLOW);
-		graphic.fillOval(eggX * nodeSize, eggY * nodeSize, nodeSize, nodeSize);
+		graphic.fillOval(egg1X * nodeSize, egg1Y * nodeSize, nodeSize, nodeSize);
+		
+		graphic.setFill(Color.DEEPPINK);
+		graphic.fillOval(egg2X * nodeSize, egg2Y * nodeSize, nodeSize, nodeSize);
 		
 		/**
 		 * set the snake head color
@@ -219,7 +254,7 @@ public class GameView extends Application{
 		 * show the shape, location and color for the obstacles
 		 */
 		for(Node obs : obstacle) {
-			graphic.setFill(Color.DARKGRAY);
+			graphic.setFill(Color.BLACK);
 			graphic.fillRect(obs.x * nodeSize, obs.y * nodeSize, nodeSize, nodeSize);
 		}
 		/**
@@ -228,6 +263,14 @@ public class GameView extends Application{
 		graphic.setFill(Color.GOLD);
 		graphic.setFont(new Font("", 20));
 		graphic.fillText("Score: " + score, actualRowNum * (nodeSize - 19.5), actualColNum * (nodeSize - 19));
+		
+		graphic.setFill(Color.GOLD);
+		graphic.setFont(new Font("", 20));
+		graphic.fillText("Level: " + level, actualRowNum * (nodeSize - 15), actualColNum * (nodeSize - 19));
+		
+		graphic.setFill(Color.GOLD);
+		graphic.setFont(new Font("", 20));
+		graphic.fillText("Snake Length: " + snakeLengh, actualRowNum * (nodeSize - 10.5), actualColNum * (nodeSize - 19));
 	}
 		
 		/**
@@ -236,19 +279,24 @@ public class GameView extends Application{
 		 */
 	public static void startGame() {
 		start: while (true) {
-			eggX = (int)(Math.random()*(rowNum-2)+2);
-			eggY = (int)(Math.random()*(colNum-2)+2);
+			egg1X = (int)(Math.random()*(rowNum-2)+2);
+			egg1Y = (int)(Math.random()*(colNum-2)+2);
+			egg2X = (int)(Math.random()*(rowNum-2)+2);
+			egg2Y = (int)(Math.random()*(colNum-2)+2);
 			obsX = (int)(Math.random()*(rowNum-2)+2);
 			obsY = (int)(Math.random()*(colNum-2)+2);
+
 			for (Node aCanvas : snake) {
-				if (aCanvas.x == eggX && aCanvas.y == eggY) {
+				if (aCanvas.x == egg1X && aCanvas.y == egg1Y) {
 					continue start;
 				}
 				if (aCanvas.x == obsX && aCanvas.y == obsY) {
 					continue start;
 				}
+				if (aCanvas.x == egg2X && aCanvas.y == egg2Y) {
+					continue start;
+				}
 			}
-			
 			
 			break;
 	}
