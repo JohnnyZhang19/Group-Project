@@ -77,7 +77,7 @@ public class GameView extends Application{
 					screen(graphic);
 				}
 			}
-			
+
 
 		}.start();
 		
@@ -118,6 +118,10 @@ public class GameView extends Application{
 			graphic.setFill(Color.CRIMSON);
 			graphic.setFont(new Font("", 50));
 			graphic.fillText("GAME OVER", 150, 300); 
+//			String GameOver = "src/snake/GameOver.mp3";
+//			Media over = new Media(new File(GameOver).toURI().toString());  
+//			MediaPlayer mediaPlayer = new MediaPlayer(over);  
+//			mediaPlayer.setAutoPlay(true);
 			return;
 		}
 		
@@ -134,11 +138,14 @@ public class GameView extends Application{
 		 */
 		for (int i = 0; i < snake.size(); i++) {
 			if(obsX == snake.element().x && obsY == snake.element().y) {
-				continue;
+				obsX = (int)(Math.random()*(rowNum-2)+2);
+				obsY = (int)(Math.random()*(colNum-2)+2);
 			}else if (egg1X == snake.element().x && egg1Y == snake.element().y) {
-				continue;
+				egg1X = (int)(Math.random()*(rowNum-2)+2);
+				egg1Y = (int)(Math.random()*(colNum-2)+2);
 			}else if (egg2X == snake.element().x && egg2Y == snake.element().y) {
-				continue;
+				egg2X = (int)(Math.random()*(rowNum-2)+2);
+				egg2Y = (int)(Math.random()*(colNum-2)+2);
 			}
 		}
 		
