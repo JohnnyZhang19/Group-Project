@@ -7,9 +7,9 @@ package snake;
  */
 
 public class Node {
-	private int x;
-	private int y;
-	private int type;
+	public int x;
+	public int y;
+	public int type;
 	
 	public Node(int x, int y, int type) {
 		this.x = x;

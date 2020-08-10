@@ -8,11 +8,11 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.control.*;
+import javafx.scene.effect.Reflection;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -87,24 +87,49 @@ public class Controller extends Application{
             }
             }
         );
+        
+        Button helpButton = new Button("HELP");
+        helpButton.setTextFill(Color.RED);
+        helpButton.setOnAction(actionEvent ->  {
+            try{
+            helpView h = new helpView();
+            h.start(primaryStage);
+            }
+            catch (Exception e){
+                    e.printStackTrace();
+            }
+            }
+        );
+        
         Pane border = new Pane();
 
-        menubutton.relocate(GameView.rowNum * GameView.nodeSize/2  - 35, GameView.colNum * GameView.nodeSize/2);
+        menubutton.relocate(GameView.rowNum * GameView.nodeSize/2  - 60, GameView.colNum * GameView.nodeSize/2);
+        menubutton.setMinWidth(120);
         menubutton.setMinHeight(30);
         startButton.relocate(GameView.rowNum * GameView.nodeSize/2 -60 , GameView.colNum * GameView.nodeSize/2 + 70);
         startButton.setMinWidth(120);
         startButton.setMinHeight(30);
+        helpButton.relocate(GameView.rowNum * GameView.nodeSize/2 - 20 , GameView.colNum * GameView.nodeSize/2 + 150);
 
 
 		Canvas aCanvas = new Canvas(GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
 
         Label label = new Label("Levels: ");
         label.setFont(new Font(label.getFont().getName(), Font.getDefault().getSize() + 10));
-        label.relocate(GameView.rowNum * GameView.nodeSize/2 -110, GameView.colNum * GameView.nodeSize/2 - 2);
+        label.relocate(GameView.rowNum * GameView.nodeSize/2 -145, GameView.colNum * GameView.nodeSize/2 - 2);
         label.setTextFill(Color.LIGHTBLUE);
+        
+        Label mentionLabel = new Label("Click here before you play ->");
+        mentionLabel.setFont(new Font(label.getFont().getName(), Font.getDefault().getSize() + 10));
+        mentionLabel.relocate(GameView.rowNum * GameView.nodeSize/2 -230, GameView.colNum * GameView.nodeSize/2 + 150);
+        mentionLabel.setTextFill(Color.LIGHTBLUE);
+        mentionLabel.setFont(new Font(15));
         
         Label titleLabel = new Label("Snake Frenzy");
         titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.getDefault().getSize() + 30));
+        Reflection reflect = new Reflection();
+        reflect.setFraction(1.0);
+        titleLabel.setEffect(reflect);
         titleLabel.setLayoutX(GameView.rowNum*GameView.nodeSize/2 -120);
         titleLabel.setLayoutY(GameView.colNum*GameView.nodeSize/2 -120);
         titleLabel.setTextFill(Color.RED);
@@ -115,6 +140,8 @@ public class Controller extends Application{
         border.getChildren().add(label);
         border.getChildren().add(titleLabel);
         border.getChildren().add(startButton);
+        border.getChildren().add(helpButton);
+        border.getChildren().add(mentionLabel);
 
 		/**
 		 * Insert an image.
