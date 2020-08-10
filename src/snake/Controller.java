@@ -1,34 +1,22 @@
-package application;
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+package snake;
 
 
-import javafx.animation.AnimationTimer;
+
+import java.io.File;
+
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ComboBoxBase;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import java.util.Random;
 import javafx.scene.control.*;
+import javafx.scene.effect.Reflection;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.image.*;
-import javafx.scene.paint.Color;
 
 /**
  * This class is to show the first scene and connect
@@ -49,21 +37,32 @@ public class Controller extends Application{
         MenuItem lv3 = new MenuItem(" lv 3");
 
         SplitMenuButton menubutton = new SplitMenuButton();
-
+        
         /**
+         * Add BGM in game.
+         */
+        String musicplay = "src/snake/BGM.mp3";
+		Media bgm = new Media(new File(musicplay).toURI().toString());  
+	    MediaPlayer mediaPlayer = new MediaPlayer(bgm);  
+	    mediaPlayer.setAutoPlay(true); 
+        
+	    /**
          * When user click different level, the speed of snake will 
          * be different
          */
         lv1.setOnAction(actionEvent ->  {
-            GUISnake.userChooseLevel = 0;
+            GameView.userChooseLevel = 0;
+            GameView.speed = 5;
         menubutton.setText("selected level 1");
         });
         lv2.setOnAction(actionEvent ->  {
-            GUISnake.userChooseLevel = 1;
+            GameView.userChooseLevel = 1;
+            GameView.speed = 10;
         menubutton.setText("selected level 2");
         });
         lv3.setOnAction(actionEvent ->  {
-            GUISnake.userChooseLevel = 2;
+            GameView.userChooseLevel = 2;
+            GameView.speed = 15;
         menubutton.setText("selected level 3");
         });
        
@@ -76,11 +75,11 @@ public class Controller extends Application{
          * Create start button, when click this button 
          * interface will switch to the second scene.
          */
-        Button startButton = new Button("START!!");
+        Button startButton = new Button("S T A R T !!");
         startButton.setTextFill(Color.RED);
         startButton.setOnAction(actionEvent ->  {
             try{
-            GUISnake s = new GUISnake();
+            GameView s = new GameView();
             s.start(primaryStage);
             }
             catch (Exception e){
@@ -88,40 +87,70 @@ public class Controller extends Application{
             }
             }
         );
+        
+        Button helpButton = new Button("HELP");
+        helpButton.setTextFill(Color.RED);
+        helpButton.setOnAction(actionEvent ->  {
+            try{
+            helpView h = new helpView();
+            h.start(primaryStage);
+            }
+            catch (Exception e){
+                    e.printStackTrace();
+            }
+            }
+        );
+        
         Pane border = new Pane();
 
-        menubutton.relocate(GUISnake.rowNum * GUISnake.nodeSize/2  - 35, GUISnake.colNum * GUISnake.nodeSize/2);
-        startButton.relocate(GUISnake.rowNum * GUISnake.nodeSize/2 -35 , GUISnake.colNum * GUISnake.nodeSize/2 + 50);
-        startButton.setMinWidth(80);
+        menubutton.relocate(GameView.rowNum * GameView.nodeSize/2  - 60, GameView.colNum * GameView.nodeSize/2);
+        menubutton.setMinWidth(120);
+        menubutton.setMinHeight(30);
+        startButton.relocate(GameView.rowNum * GameView.nodeSize/2 -60 , GameView.colNum * GameView.nodeSize/2 + 70);
+        startButton.setMinWidth(120);
         startButton.setMinHeight(30);
+        helpButton.relocate(GameView.rowNum * GameView.nodeSize/2 - 20 , GameView.colNum * GameView.nodeSize/2 + 150);
 
 
-		Canvas aCanvas = new Canvas(GUISnake.rowNum * GUISnake.nodeSize, GUISnake.colNum * GUISnake.nodeSize);
+		Canvas aCanvas = new Canvas(GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
 
         Label label = new Label("Levels: ");
-        label.setLayoutX(GUISnake.rowNum * GUISnake.nodeSize/2 -80);
-        label.setLayoutY(GUISnake.colNum * GUISnake.nodeSize/2 );
+        label.setFont(new Font(label.getFont().getName(), Font.getDefault().getSize() + 10));
+        label.relocate(GameView.rowNum * GameView.nodeSize/2 -145, GameView.colNum * GameView.nodeSize/2 - 2);
         label.setTextFill(Color.LIGHTBLUE);
         
+        Label mentionLabel = new Label("Click here before you play ->");
+        mentionLabel.setFont(new Font(label.getFont().getName(), Font.getDefault().getSize() + 10));
+        mentionLabel.relocate(GameView.rowNum * GameView.nodeSize/2 -230, GameView.colNum * GameView.nodeSize/2 + 150);
+        mentionLabel.setTextFill(Color.LIGHTBLUE);
+        mentionLabel.setFont(new Font(15));
+        
         Label titleLabel = new Label("Snake Frenzy");
-        titleLabel.setLayoutX(GUISnake.rowNum*GUISnake.nodeSize/2 -40);
-        titleLabel.setLayoutY(GUISnake.colNum*GUISnake.nodeSize/2 -70);
+        titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.getDefault().getSize() + 30));
+        Reflection reflect = new Reflection();
+        reflect.setFraction(1.0);
+        titleLabel.setEffect(reflect);
+        titleLabel.setLayoutX(GameView.rowNum*GameView.nodeSize/2 -120);
+        titleLabel.setLayoutY(GameView.colNum*GameView.nodeSize/2 -120);
         titleLabel.setTextFill(Color.RED);
+        
 	
 		border.getChildren().addAll(aCanvas);
         border.getChildren().add(menubutton);
         border.getChildren().add(label);
         border.getChildren().add(titleLabel);
         border.getChildren().add(startButton);
+        border.getChildren().add(helpButton);
+        border.getChildren().add(mentionLabel);
 
 		/**
 		 * Insert an image.
 		 */
         GraphicsContext graphic = aCanvas.getGraphicsContext2D();
         Image background = new Image("https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297_1280.jpg");
-        graphic.drawImage(background,0,0,GUISnake.rowNum * GUISnake.nodeSize, GUISnake.colNum * GUISnake.nodeSize);
+        graphic.drawImage(background,0,0,GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
 
-        Scene menuscene = new Scene(border, GUISnake.rowNum * GUISnake.nodeSize, GUISnake.colNum * GUISnake.nodeSize);
+        Scene menuscene = new Scene(border, GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
         primaryStage.setScene(menuscene);
 		primaryStage.setTitle("SNAKE FRENZY");
 		primaryStage.show();	
