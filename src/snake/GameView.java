@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+
 public class GameView extends Application{
 	static Dir direction = Dir.left;
 	static int egg1X;
@@ -58,8 +59,9 @@ public class GameView extends Application{
                 System.out.println("in finishe select menu..");
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
 
-		new AnimationTimer() {
+		AnimationTimer timer = new AnimationTimer() {
 			long lastSceen = 0;
+			long pause = 0; 
 
 			public void handle(long now) {
 				if (lastSceen == 0) {
@@ -76,10 +78,12 @@ public class GameView extends Application{
 					lastSceen = now;
 					screen(graphic);
 				}
+
 			}
 
-
-		}.start();
+		};
+		
+			timer.start();
 		
 		Scene scene = new Scene(root, rowNum * nodeSize, colNum * nodeSize);
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
@@ -95,7 +99,14 @@ public class GameView extends Application{
 				if (key.getCode() == KeyCode.RIGHT) {
 					direction = Dir.right;
 				}
-
+				//  Pause the game
+				if (key.getCode() == KeyCode.SPACE) {
+					timer.stop();
+				}		
+				//  Resume the game
+				if (key.getCode() == KeyCode.ENTER) {
+					timer.start();
+				}
 			});
 		/**
 		 * add initial snake

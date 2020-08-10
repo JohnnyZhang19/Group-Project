@@ -1,4 +1,4 @@
-package snake;
+/** package snake;
 	
 import java.io.FileInputStream;
 
@@ -29,3 +29,4 @@ public class GUISankeEntrace extends Application {
 		launch(args);
 	}
 }
+*/
