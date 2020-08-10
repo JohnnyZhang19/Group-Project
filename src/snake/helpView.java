@@ -28,10 +28,10 @@ public class helpView extends Application{
 		roles.setText("	Welcome to Snake Frenzy!!! I really hope you can have a fantastic experience in this game. "
 				+ "You need to choose a level you want to play at first and then click the \"START\" button to"
 				+ " stat the game. You should use the direction key to control the direction of the snake. "
-				+ "When the snake eat a gift the length will incease one node and the score will plus one, and"
+				+ "When the snake eat a coin the length will incease one node and the score will plus one, and"
 				+ " the speed of the snake will also rise a little.\n	Try your best do not touch bombs, otherwise, you will"
-				+ " lose mark and decrease 2 nodes of the length of the snake. When "
-				+ "the length decline to 0, game over!! When snake knock the stone and the margine of the scene,"
+				+ " decrease 2 nodes of the length of the snake. When "
+				+ "the length lease than 2, game over!! When snake knock the stone and the margine of the scene,"
 				+ " game over!! When you manipulate the snake to move in the opposite direction, game over!! Try to survive longer!");
 		
 		Canvas aCanvas = new Canvas(600,500); 
