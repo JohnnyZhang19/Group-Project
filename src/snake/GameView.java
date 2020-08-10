@@ -14,6 +14,8 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -56,7 +58,6 @@ public class GameView extends Application{
                 System.out.println("in finishe select menu..");
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
 
-
 		new AnimationTimer() {
 			long lastSceen = 0;
 
@@ -71,10 +72,6 @@ public class GameView extends Application{
 		//  Level 0: easy, level 1: normal; level 2: hard
 		//  We can create as many level as we want depending on the speed
 				
-				//userChooseLevel = 0;
-//				if (userChooseLevel == 0) speed = 5;
-//				if (userChooseLevel == 1) speed = 10;
-//				if (userChooseLevel == 2) speed = 15;
 				if (now - lastSceen > 1000000000 / speed) {
 					lastSceen = now;
 					screen(graphic);
@@ -83,8 +80,6 @@ public class GameView extends Application{
 			
 
 		}.start();
-
-		
 		
 		Scene scene = new Scene(root, rowNum * nodeSize, colNum * nodeSize);
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
@@ -122,7 +117,7 @@ public class GameView extends Application{
 			 */
 			graphic.setFill(Color.CRIMSON);
 			graphic.setFont(new Font("", 50));
-			graphic.fillText("GAME OVER", 150, 300);
+			graphic.fillText("GAME OVER", 150, 300); 
 			return;
 		}
 		
@@ -180,7 +175,6 @@ public class GameView extends Application{
 				gameOver = true;
 			}
 			break;
-
 		}
 
 		// eat Egg, eat one egg score add one, speed increase one, and add one new random obstacle in the map
@@ -191,6 +185,10 @@ public class GameView extends Application{
 			speed ++;
 			snakeLengh ++;
 			startGame();
+	        String eatEgg = "src/snake/eatEgg.mp3";
+			Media eat = new Media(new File(eatEgg).toURI().toString());  
+		    MediaPlayer mediaPlayer = new MediaPlayer(eat);  
+		    mediaPlayer.setAutoPlay(true); 
 
 			if (score % 5 == 0) {
 				level ++;
@@ -205,6 +203,10 @@ public class GameView extends Application{
 			speed --;
 			snakeLengh -= 2;
 			startGame();
+	        String eatBomb = "src/snake/eatBomb.mp3";
+			Media bomb = new Media(new File(eatBomb).toURI().toString());  
+		    MediaPlayer mediaPlayer = new MediaPlayer(bomb);  
+		    mediaPlayer.setAutoPlay(true); 
 		}
 
 		// self destroy and destroy when hit the obstacles
@@ -224,40 +226,61 @@ public class GameView extends Application{
 		/**
 		 * set the background color
 		 */
-//		graphic.setFill(Color.BLACK);
-//		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
 		String BC = "src/snake/GameViewBC.jpg";
 		Image background = new Image(new File(BC).toURI().toString());
-        graphic.drawImage(background,0,0,GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);		
+        graphic.drawImage(background,0,0,rowNum * nodeSize, colNum * nodeSize);		
 		/**
 		 * show the color, location of egg in the map
 		 */
-		graphic.setFill(Color.YELLOW);
-		graphic.fillOval(egg1X * nodeSize, egg1Y * nodeSize, nodeSize, nodeSize);
+        String coin = "src/snake/egg.png";
+        Image eggCoin = new Image(new File(coin).toURI().toString());
+        graphic.drawImage(eggCoin,egg1X * nodeSize, egg1Y * nodeSize);	
 		
-		graphic.setFill(Color.DEEPPINK);
-		graphic.fillOval(egg2X * nodeSize, egg2Y * nodeSize, nodeSize, nodeSize);
+        String bomb = "src/snake/bomb.png";
+        Image eggBomb = new Image(new File(bomb).toURI().toString());
+        graphic.drawImage(eggBomb,egg2X * nodeSize, egg2Y * nodeSize);
 		
 		/**
 		 * set the snake head color
 		 */
-		graphic.setFill(Color.RED);
-		graphic.fillOval(snake.get(0).x * nodeSize, snake.get(0).y * nodeSize, nodeSize, nodeSize);
+        if (snake.get(0).x == snake.get(1).x && snake.get(0).y < snake.get(1).y) {
+        	String snakeUp = "src/snake/snakeUp.png";
+        	Image up = new Image(new File(snakeUp).toURI().toString());
+        	graphic.drawImage(up,snake.get(0).x * nodeSize, snake.get(0).y * nodeSize, nodeSize, nodeSize);	
+		}
+        if (snake.get(0).x == snake.get(1).x && snake.get(0).y > snake.get(1).y) {
+        	String snakeDown = "src/snake/snakeDown.png";
+	        Image down = new Image(new File(snakeDown).toURI().toString());
+	        graphic.drawImage(down,snake.get(0).x * nodeSize, snake.get(0).y * nodeSize, nodeSize, nodeSize);
+		}
+        if (snake.get(0).x < snake.get(1).x && snake.get(0).y == snake.get(1).y) {
+        	String snakeLeft = "src/snake/snakeLeft.png";
+	        Image left = new Image(new File(snakeLeft).toURI().toString());
+	        graphic.drawImage(left,snake.get(0).x * nodeSize, snake.get(0).y * nodeSize, nodeSize, nodeSize);
+		}
+        if (snake.get(0).x > snake.get(1).x && snake.get(0).y == snake.get(1).y) {
+        	String snakeRight = "src/snake/snakeRight.png";
+	        Image right = new Image(new File(snakeRight).toURI().toString());
+	        graphic.drawImage(right,snake.get(0).x * nodeSize, snake.get(0).y * nodeSize, nodeSize, nodeSize);
+		}
+        
 		
 		/**
 		 * show the shape, color, and location of snake body in the map.
 		 */
 		for (int i = 1; i < snake.size(); i ++) {
-			graphic.setFill(Color.CORNFLOWERBLUE);
-			graphic.fillOval(snake.get(i).x * nodeSize, snake.get(i).y * nodeSize, nodeSize, nodeSize);
+			String snakeBody = "src/snake/snakeBody.png";
+	        Image body = new Image(new File(snakeBody).toURI().toString());
+	        graphic.drawImage(body,snake.get(i).x * nodeSize, snake.get(i).y * nodeSize, nodeSize, nodeSize);
 		}
 		
 		/**
 		 * show the shape, location and color for the obstacles
 		 */
 		for(Node obs : obstacle) {
-			graphic.setFill(Color.GAINSBORO);
-			graphic.fillRect(obs.x * nodeSize, obs.y * nodeSize, nodeSize, nodeSize);
+			String obstacle = "src/snake/obstacle.png";
+	        Image obstacles = new Image(new File(obstacle).toURI().toString());
+	        graphic.drawImage(obstacles,obs.x * nodeSize, obs.y * nodeSize, nodeSize, nodeSize);	
 		}
 		/**
 		 * set the location, size and color for the score text
