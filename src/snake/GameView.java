@@ -43,6 +43,7 @@ public class GameView extends Application{
 	static List<Node> nodes = new ArrayList<Node>();
 	static int level = 1;
 	static int snakeLengh = 2;
+	boolean pause = false; 
 
 	public enum Dir {
 		left, right, up, down
@@ -61,7 +62,6 @@ public class GameView extends Application{
 
 		AnimationTimer timer = new AnimationTimer() {
 			long lastSceen = 0;
-			long pause = 0; 
 
 			public void handle(long now) {
 				if (lastSceen == 0) {
@@ -101,12 +101,16 @@ public class GameView extends Application{
 				}
 				//  Pause the game
 				if (key.getCode() == KeyCode.SPACE) {
-					timer.stop();
-				}		
+					if (pause) {
+					pause = false;
+					timer.start();	
+					}
+						
 				//  Resume the game
-				if (key.getCode() == KeyCode.ENTER) {
-					timer.start();
-				}
+				else {
+					pause = true;
+					timer.stop();
+				}}
 			});
 		/**
 		 * add initial snake
