@@ -110,6 +110,10 @@ public class GameView extends Application{
 				else {
 					pause = true;
 					timer.stop();
+					graphic.setFill(Color.CRIMSON);
+					graphic.setFont(new Font("", 80));
+					graphic.fillText("PAUSE", 185, 330); 
+					
 				}}
 			});
 		/**
