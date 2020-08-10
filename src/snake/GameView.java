@@ -137,10 +137,11 @@ public class GameView extends Application{
 		 * avoid eggs and obstacle appear on snake body.
 		 */
 		for (int i = 0; i < snake.size(); i++) {
-			if(obsX == snake.element().x && obsY == snake.element().y) {
+			if((obsX == snake.element().x && obsY == snake.element().y) || (obsX == egg1X && obsY == egg1Y)
+					|| (obsX == egg2X && obsY == egg2Y)) {
 				obsX = (int)(Math.random()*(rowNum-2)+2);
 				obsY = (int)(Math.random()*(colNum-2)+2);
-			}else if (egg1X == snake.element().x && egg1Y == snake.element().y) {
+			}else if ((egg1X == snake.element().x && egg1Y == snake.element().y) || (egg1X == egg2X && egg1Y == egg2Y)) {
 				egg1X = (int)(Math.random()*(rowNum-2)+2);
 				egg1Y = (int)(Math.random()*(colNum-2)+2);
 			}else if (egg2X == snake.element().x && egg2Y == snake.element().y) {
@@ -207,7 +208,7 @@ public class GameView extends Application{
 			snake.removeLast();
 			obstacle.add(new Node(obsX, obsY, 4));
 			obstacle.add(new Node(obsX, obsY, 4));
-			speed --;
+			speed -= 2;
 			snakeLengh -= 2;
 			startGame();
 	        String eatBomb = "src/snake/eatBomb.mp3";
@@ -233,9 +234,11 @@ public class GameView extends Application{
 		/**
 		 * set the background color
 		 */
-		String BC = "src/snake/GameViewBC.jpg";
-		Image background = new Image(new File(BC).toURI().toString());
-        graphic.drawImage(background,0,0,rowNum * nodeSize, colNum * nodeSize);		
+		graphic.setFill(Color.BLACK);
+		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
+//		String BC = "src/snake/GameViewBC.jpg";
+//		Image background = new Image(new File(BC).toURI().toString());
+//        graphic.drawImage(background,0,0,rowNum * nodeSize, colNum * nodeSize);		
 		/**
 		 * show the color, location of egg in the map
 		 */
