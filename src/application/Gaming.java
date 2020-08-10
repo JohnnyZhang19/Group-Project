@@ -1,32 +1,26 @@
-package snake;
-
+package application;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
-
+import application.View;
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ComboBoxBase;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import java.util.Random;
+import snake.Egg;
+import snake.Frame;
+import snake.Obstacles;
+import snake.Snake;
 
-
-public class Main extends Application{
+public class Gaming extends View{
 	static Dir direction = Dir.left;
 	static int eggX = 0;
 	static int eggY = 0;
@@ -36,13 +30,13 @@ public class Main extends Application{
 	public static int rowNum = actualRowNum+2;
 	public static int colNum = actualColNum+2;
 	static List<Node> snake = new ArrayList<>();
-	public static int nodeSize = 15;
+	public static int nodeSize = 20;
 	public Snake aSnake = new Snake();
 	public Egg egg = new Egg();
 	public Obstacles obs = new Obstacles();
 	int score = 0;
 	int listLength = 10;
-	int speed;
+	int speed = 15;
 	Node[] obsList = new Node[listLength];
 	static List<Node> obstacle = new ArrayList<>();
 	static boolean gameOver = false;
@@ -64,44 +58,53 @@ public class Main extends Application{
 		}
 
 	}
+
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		startGame();
-		VBox root = new VBox();
+	public void onLaunch() {
 		Canvas aCanvas = new Canvas(rowNum * nodeSize, colNum * nodeSize);
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
+		startGame();
+		VBox root = new VBox();
 
-		root.getChildren().addAll(aCanvas);
-		
+//		new AnimationTimer() {
+//			long lastSceen = 0;
+//
+//			public void handle(long now) {
+//				if (lastSceen == 0) {
+//					lastSceen = now;
+//					screen(graphic);
+//					return;
+//				}
+//				
+//		//  Different levels for snake:
+//		//  Level 0: easy, level 1: normal; level 2: hard
+//		//  We can create as many level as we want depending on the speed
+//				
+//				userChooseLevel = 2;
+//				if (userChooseLevel == 0) speed = 5;
+//				if (userChooseLevel == 1) speed = 10;
+//				if (userChooseLevel == 2) speed = 15;
+//				if (now - lastSceen > 1000000000 / speed) {
+//					lastSceen = now;
+//					screen(graphic);
+//				}
+//			}
+//			
+//
+//		}.start();
 		new AnimationTimer() {
-			long lastSceen = 0;
+			long then = 0;
 
 			public void handle(long now) {
-				if (lastSceen == 0) {
-					lastSceen = now;
-					screen(graphic);
-					return;
-				}
-				
-		//  Different levels for snake:
-		//  Level 0: easy, level 1: normal; level 2: hard
-		//  We can create as many level as we want depending on the speed
-				
-				userChooseLevel = 2;
-				if (userChooseLevel == 0) speed = 5;
-				if (userChooseLevel == 1) speed = 10;
-				if (userChooseLevel == 2) speed = 15;
-				if (now - lastSceen > 1000000000 / speed) {
-					lastSceen = now;
+
+				if (now - then > 1000000000 / speed) {
+					then = now;
 					screen(graphic);
 				}
 			}
 			
 
 		}.start();
-
-		
-		
 		Scene scene = new Scene(root, rowNum * nodeSize, colNum * nodeSize);
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
 				if (key.getCode() == KeyCode.W) {
@@ -119,12 +122,6 @@ public class Main extends Application{
 
 			});
 		
-
-		snake.add(new Node(rowNum/2,colNum/2,5));
-		snake.add(new Node(rowNum/2,colNum/2 - 1,3));
-		primaryStage.setScene(scene);
-		primaryStage.setTitle("SNAKE FRENZY");
-		primaryStage.show();	
 	}
 	
 	public static void screen(GraphicsContext graphic) {
@@ -135,8 +132,8 @@ public class Main extends Application{
 			graphic.fillText("GAME OVER", 100, 250);
 			return;
 		}
-		
-		
+
+
 		for (int i = snake.size() - 1; i >= 1; i--) {
 			snake.get(i).x = snake.get(i - 1).x;
 			snake.get(i).y = snake.get(i - 1).y;
@@ -181,46 +178,57 @@ public class Main extends Application{
 				gameOver = true;
 			}
 		}
-		
-				
+
+
 		graphic.setFill(Color.GOLD);
 		graphic.setFont(new Font("", 30));
-		graphic.fillText("Score:" + frame.score, rowNum * (nodeSize - 10), colNum * (nodeSize - 10));
-		
-		graphic.setFill(Color.DARKGREEN);
+		graphic.fillText("Score:" + frame.getScore(), rowNum * (nodeSize - 10), colNum * (nodeSize - 10));
+
+		graphic.setFill(Color.BLACK);
 		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
-		
-		graphic.setFill(Color.FUCHSIA);
+
+		graphic.setFill(Color.YELLOW);
 		graphic.fillOval(eggX * nodeSize, eggY * nodeSize, nodeSize, nodeSize);
-		
+
 		for (Node aCanvas : snake) {
-			graphic.setFill(Color.CORAL);
-			graphic.fillOval(aCanvas.x * nodeSize, aCanvas.y * nodeSize, nodeSize, nodeSize);
+			graphic.setFill(Color.AQUA);
+			graphic.fillRect(aCanvas.x * nodeSize, aCanvas.y * nodeSize, nodeSize, nodeSize);
 		}
 	}
-		
-		
 	public static void startGame() {
-	start: while (true) {
-		eggX = rand.nextInt(rowNum);
-		eggY = rand.nextInt(colNum);
-		for (Node aCanvas : snake) {
-			if (aCanvas.x == eggX && aCanvas.y == eggY) {
-				continue start;
+		start: while (true) {
+			eggX = rand.nextInt(rowNum);
+			eggY = rand.nextInt(colNum);
+			for (Node aCanvas : snake) {
+				if (aCanvas.x == eggX && aCanvas.y == eggY) {
+					continue start;
+				}
 			}
+
+			break;
 		}
-
-		break;
-	}
-
-		
-	}	
-	public static void main(String[] arg) {
-		Frame frame = new Frame();
-		frame.run();
-
 	}
 	
+}
 
-	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
