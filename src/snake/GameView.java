@@ -60,6 +60,9 @@ public class GameView extends Application{
                 System.out.println("in finishe select menu..");
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
 
+		/**
+		 * using animationTimer to make the snake to move itself.
+		 */
 		AnimationTimer timer = new AnimationTimer() {
 			long lastSceen = 0;
 
@@ -69,10 +72,6 @@ public class GameView extends Application{
 					screen(graphic);
 					return;
 				}
-				
-		//  Different levels for snake:
-		//  Level 0: easy, level 1: normal; level 2: hard
-		//  We can create as many level as we want depending on the speed
 				
 				if (now - lastSceen > 1000000000 / speed) {
 					lastSceen = now;
@@ -86,6 +85,9 @@ public class GameView extends Application{
 			timer.start();
 		
 		Scene scene = new Scene(root, rowNum * nodeSize, colNum * nodeSize);
+		/**
+		 * set the keyEvent for the user input for the direction of snake move.
+		 */
 		scene.addEventFilter(KeyEvent.KEY_PRESSED, key -> {
 				if (key.getCode() == KeyCode.UP) {
 					direction = Dir.up;
@@ -137,16 +139,13 @@ public class GameView extends Application{
 			graphic.setFill(Color.CRIMSON);
 			graphic.setFont(new Font("", 50));
 			graphic.fillText("GAME OVER", 150, 300); 
-//			String GameOver = "src/snake/GameOver.mp3";
-//			Media over = new Media(new File(GameOver).toURI().toString());  
-//			MediaPlayer mediaPlayer = new MediaPlayer(over);  
-//			mediaPlayer.setAutoPlay(true);
 			return;
 		}
 		
 		
 		/**
 		 * for snake move, when snake move, replace the node to the index-1 node
+		 * 
 		 */
 		for (int i = snake.size() - 1; i >= 1; i--) {
 			snake.get(i).x = snake.get(i - 1).x;
@@ -154,6 +153,8 @@ public class GameView extends Application{
 		}
 		/**
 		 * avoid eggs and obstacle appear on snake body.
+		 * if one object's(snake, obstacle, egg, bomb) x and y are the same with another object, 
+		 * obstacle and eggs will appear randomly in the range in the map.
 		 */
 		for (int i = 0; i < snake.size(); i++) {
 			if((obsX == snake.element().x && obsY == snake.element().y) || (obsX == egg1X && obsY == egg1Y)
@@ -204,7 +205,11 @@ public class GameView extends Application{
 			break;
 		}
 
-		// eat Egg, eat one egg score add one, speed increase one, and add one new random obstacle in the map
+		/**
+		 *  eat Egg, eat one egg score add one, speed increase one, and add one new random obstacle in the map,
+		 *  also increase the score and snake length that appear in the top of the scene.
+		 *  use Media to add a sound of eat food, when the snake egg the coin, will auto play the sound.
+		 */
 		if (egg1X == snake.get(0).x && egg1Y == snake.get(0).y) {
 			snake.addLast(new Node(-1, -1, 3));
 			obstacle.add(new Node(obsX, obsY, 4));
@@ -222,6 +227,10 @@ public class GameView extends Application{
 			}
 
 		}
+		/**
+		 * when eat the bomb, snake will remove the last two tail and appear two new obstacles
+		 * use Media to add the sound of hit the bomb, when snake head hit the bomb will auto play the sound.
+		 */
 		if (egg2X == snake.get(0).x && egg2Y == snake.get(0).y) {
 			snake.removeLast();
 			snake.removeLast();
@@ -236,7 +245,8 @@ public class GameView extends Application{
 		    mediaPlayer.setAutoPlay(true); 
 		}
 
-		// self destroy and destroy when hit the obstacles
+		// self destroy and destroy when hit the obstacles using two for loop
+		// when snake body length is lease than 2, game over.
 		for (int i = 1; i < snake.size(); i++) {
 			if (snake.get(0).x == snake.get(i).x && snake.get(0).y == snake.get(i).y) {
 				gameOver = true;
@@ -251,26 +261,31 @@ public class GameView extends Application{
 			gameOver = true;
 		}
 		/**
-		 * set the background color
+		 * set the background color using graphic.SetFill to black.
 		 */
 		graphic.setFill(Color.BLACK);
 		graphic.fillRect(0, 0,  rowNum * nodeSize, colNum * nodeSize);
-//		String BC = "src/snake/GameViewBC.jpg";
-//		Image background = new Image(new File(BC).toURI().toString());
-//        graphic.drawImage(background,0,0,rowNum * nodeSize, colNum * nodeSize);		
 		/**
 		 * show the color, location of egg in the map
+		 * using drawImage to insert the image "coin" with the egg
 		 */
         String coin = "src/snake/egg.png";
         Image eggCoin = new Image(new File(coin).toURI().toString());
         graphic.drawImage(eggCoin,egg1X * nodeSize, egg1Y * nodeSize);	
 		
+        /**
+		 * show the color, location of bomb in the map
+		 * using drawImage to insert the image "bomb" with the bomb
+		 */
         String bomb = "src/snake/bomb.png";
         Image eggBomb = new Image(new File(bomb).toURI().toString());
         graphic.drawImage(eggBomb,egg2X * nodeSize, egg2Y * nodeSize);
 		
 		/**
-		 * set the snake head color
+		 * use the logic of if snake head and the second index of snake body's x are the same, compare the y, if head's y is grater than the second index
+		 * means snake is moving down, opposite, snake is moving up.
+		 * if y are the same, head's x is grater than second index's x, means is moving right, opposite, snake is moving left.
+		 * And using four different direction snake head image to replace the current direction of the snake head.
 		 */
         if (snake.get(0).x == snake.get(1).x && snake.get(0).y < snake.get(1).y) {
         	String snakeUp = "src/snake/snakeUp.png";
@@ -296,6 +311,7 @@ public class GameView extends Application{
 		
 		/**
 		 * show the shape, color, and location of snake body in the map.
+		 * using drawImage to insert a image for each node of snake body.
 		 */
 		for (int i = 1; i < snake.size(); i ++) {
 			String snakeBody = "src/snake/snakeBody.png";
@@ -305,6 +321,7 @@ public class GameView extends Application{
 		
 		/**
 		 * show the shape, location and color for the obstacles
+		 * using drawImage to insert a image for each obstacle
 		 */
 		for(Node obs : obstacle) {
 			String obstacle = "src/snake/obstacle.png";
@@ -312,7 +329,9 @@ public class GameView extends Application{
 	        graphic.drawImage(obstacles,obs.x * nodeSize, obs.y * nodeSize, nodeSize, nodeSize);	
 		}
 		/**
-		 * set the location, size and color for the score text
+		 * set the location, size and color for the score text, the current level, and the snake body length
+		 * using graphic.setFill to print the color, graphic.setFont to set the font, 
+		 * and graphic.fillText to have the location and the text of each information.
 		 */
 		graphic.setFill(Color.GOLD);
 		graphic.setFont(new Font("", 20));
@@ -328,8 +347,7 @@ public class GameView extends Application{
 	}
 		
 		/**
-		 * randomly appear a egg and obstacles in the map, if the location of egg and obstacles has the same location with 
-		 * snake body, it will reappear a new egg or obstacles
+		 * randomly appear a egg and obstacles in the map using Math.random for each object's x and y.
 		 */
 	public static void startGame() {
 		start: while (true) {
