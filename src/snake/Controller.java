@@ -88,8 +88,8 @@ public class Controller extends Application{
              * when we call start method
              */
         	try{
-            GameView s = new GameView();
-            s.start(primaryStage);
+            GameView gameView = new GameView();
+            gameView.start(primaryStage);
             }
             catch (Exception e){
                     e.printStackTrace();
@@ -105,8 +105,8 @@ public class Controller extends Application{
         helpButton.setTextFill(Color.RED);
         helpButton.setOnAction(actionEvent ->  {
             try{
-            helpView h = new helpView();
-            h.start(primaryStage);
+            helpView roles = new helpView();
+            roles.start(primaryStage);
             }
             catch (Exception e){
                     e.printStackTrace();
