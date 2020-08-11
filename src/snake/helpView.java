@@ -32,7 +32,7 @@ public class helpView extends Application{
 		Text roles = new Text(30, 40, "This is a test");
 		roles.setWrappingWidth(550);
 		roles.setFont(new Font(20));
-		roles.setFill(Color.RED);
+		roles.setFill(Color.WHITE);
 		roles.setText("	Welcome to Snake Frenzy!!! I really hope you can have a fantastic experience in this game. "
 				+ "You need to choose a level you want to play at first and then click the \"START\" button to"
 				+ " stat the game. You should use the direction keys to control the direction of the snake. "
@@ -48,7 +48,7 @@ public class helpView extends Application{
 		 */
 		Canvas aCanvas = new Canvas(600,500); 
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
-	    Image background = new Image("https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297_1280.jpg");
+	    Image background = new Image("https://cdn.pixabay.com/photo/2020/07/25/14/23/cliff-5436923_1280.jpg");
 	    graphic.drawImage(background,0,0,600,500);
 	    
 	    /**

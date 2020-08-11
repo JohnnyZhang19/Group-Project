@@ -43,6 +43,8 @@ public class Controller extends Application{
         
         /**
          * Add BGM in game.
+         * Reference:
+         * Howes, Jack."Break Again(Original Mix)." Break Again. EuCurtoElectro, 2015. Retrieved from: https://music.163.com/#/song?id=33891204
          */
         String musicplay = "src/snake/BGM.mp3";
 		Media bgm = new Media(new File(musicplay).toURI().toString());  
@@ -127,10 +129,12 @@ public class Controller extends Application{
 
         /**
 		 * Insert an image.
+		 * Reference:
+		 * Retrieved from: https://cdn.pixabay.com/photo/2020/07/25/14/23/cliff-5436923_1280.jpg
 		 */
 		Canvas aCanvas = new Canvas(GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
         GraphicsContext graphic = aCanvas.getGraphicsContext2D();
-        Image background = new Image("https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297_1280.jpg");
+        Image background = new Image("https://cdn.pixabay.com/photo/2020/07/25/14/23/cliff-5436923_1280.jpg");
         graphic.drawImage(background,0,0,GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
        
         /**
