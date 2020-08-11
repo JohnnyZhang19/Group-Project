@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 /**
+ * this is the text-based class of the game
  * this frame class is to compile all other class, and to make the game run
  * @author Zonglin Zhang UCID: 30020965
  *

@@ -17,6 +17,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.image.*;
 
 /**
+ * This is the GUI of the game
  * This class is to show the first scene and connect
  * the second scene together.
  * @author Yuzhe Zhou UCID: 30102199

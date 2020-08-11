@@ -24,7 +24,7 @@ import javafx.stage.Stage;
  * This class contains keyboard event handling methods
  * to control the snake, pause and resume game play
  * and some logics in the game play
- * @author Ha Do & Zonglin Zhang
+ * @author Ha Do UCID: 30097811 & Zonglin Zhang UCID: 30020965
  */
 
 public class GameView extends Application{
