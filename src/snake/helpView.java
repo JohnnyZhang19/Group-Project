@@ -45,6 +45,8 @@ public class helpView extends Application{
 		
 		/**
 		 * Create a canvas to put the image.
+		 * Reference:
+		 * Retrieved from: https://cdn.pixabay.com/photo/2020/07/25/14/23/cliff-5436923_1280.jpg
 		 */
 		Canvas aCanvas = new Canvas(600,500); 
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
