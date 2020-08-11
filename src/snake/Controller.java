@@ -1,7 +1,5 @@
 package snake;
 
-
-
 import java.io.File;
 
 import javafx.application.Application;
@@ -32,6 +30,11 @@ public class Controller extends Application{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
        
+		/**
+         *Create a  pane at first. 
+         */
+		Pane border = new Pane();
+		
 		MenuItem lv1 = new MenuItem(" lv 1");
         MenuItem lv2 = new MenuItem(" lv 2");
         MenuItem lv3 = new MenuItem(" lv 3");
@@ -65,7 +68,7 @@ public class Controller extends Application{
             GameView.speed = 15;
         menubutton.setText("selected level 3");
         });
-       
+        
         menubutton.setText("select level");
         menubutton.getItems().addAll(lv1, lv2, lv3);
         menubutton.setLayoutX(15*6);
@@ -78,7 +81,13 @@ public class Controller extends Application{
         Button startButton = new Button("S T A R T !!");
         startButton.setTextFill(Color.RED);
         startButton.setOnAction(actionEvent ->  {
-            try{
+        	
+        	/**
+             * Call the start method in GameView class to switch the 
+             * scene and try and catch the unexpected Exception 
+             * when we call start method
+             */
+        	try{
             GameView s = new GameView();
             s.start(primaryStage);
             }
@@ -88,6 +97,10 @@ public class Controller extends Application{
             }
         );
         
+        /**
+         * Create a help button, the scene will switch to a Rule scene 
+         * when click the help button.
+         */
         Button helpButton = new Button("HELP");
         helpButton.setTextFill(Color.RED);
         helpButton.setOnAction(actionEvent ->  {
@@ -101,8 +114,9 @@ public class Controller extends Application{
             }
         );
         
-        Pane border = new Pane();
-
+        /**
+         * Set the location, height, and width of the menu button start button and help button. 
+         */
         menubutton.relocate(GameView.rowNum * GameView.nodeSize/2  - 60, GameView.colNum * GameView.nodeSize/2);
         menubutton.setMinWidth(120);
         menubutton.setMinHeight(30);
@@ -111,31 +125,50 @@ public class Controller extends Application{
         startButton.setMinHeight(30);
         helpButton.relocate(GameView.rowNum * GameView.nodeSize/2 - 20 , GameView.colNum * GameView.nodeSize/2 + 150);
 
-
+        /**
+		 * Insert an image.
+		 */
 		Canvas aCanvas = new Canvas(GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
-
+        GraphicsContext graphic = aCanvas.getGraphicsContext2D();
+        Image background = new Image("https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297_1280.jpg");
+        graphic.drawImage(background,0,0,GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
+       
+        /**
+         * Set a label shows "Levels: " before the menu button.
+         */
         Label label = new Label("Levels: ");
         label.setFont(new Font(label.getFont().getName(), Font.getDefault().getSize() + 10));
         label.relocate(GameView.rowNum * GameView.nodeSize/2 -145, GameView.colNum * GameView.nodeSize/2 - 2);
         label.setTextFill(Color.LIGHTBLUE);
         
-        Label mentionLabel = new Label("Click here before you play ->");
+        /**
+         * Set a label shows "Click here before you play ->" before the help button.
+         */
+        Label mentionLabel = new Label("Click here before you play->");
         mentionLabel.setFont(new Font(label.getFont().getName(), Font.getDefault().getSize() + 10));
-        mentionLabel.relocate(GameView.rowNum * GameView.nodeSize/2 -230, GameView.colNum * GameView.nodeSize/2 + 150);
-        mentionLabel.setTextFill(Color.LIGHTBLUE);
-        mentionLabel.setFont(new Font(15));
+        mentionLabel.relocate(GameView.rowNum * GameView.nodeSize/2 -280, GameView.colNum * GameView.nodeSize/2 + 150);
+        mentionLabel.setTextFill(Color.RED);
+        mentionLabel.setFont(new Font(19));
         
+        /**
+         * Set a label shows "Snake Frenzy" 
+         */
         Label titleLabel = new Label("Snake Frenzy");
         titleLabel.setFont(new Font(titleLabel.getFont().getName(), Font.getDefault().getSize() + 30));
+        /**
+         * set the effect of the title.
+         */
         Reflection reflect = new Reflection();
         reflect.setFraction(1.0);
         titleLabel.setEffect(reflect);
-        titleLabel.setLayoutX(GameView.rowNum*GameView.nodeSize/2 -120);
-        titleLabel.setLayoutY(GameView.colNum*GameView.nodeSize/2 -120);
+        titleLabel.relocate(GameView.rowNum*GameView.nodeSize/2 -210, GameView.colNum*GameView.nodeSize/2 -170);
         titleLabel.setTextFill(Color.RED);
+        titleLabel.setFont(new Font(70));
         
-	
-		border.getChildren().addAll(aCanvas);
+        /**
+         * Add all the buttons and labels above the in the pane.
+         */
+		border.getChildren().add(aCanvas);
         border.getChildren().add(menubutton);
         border.getChildren().add(label);
         border.getChildren().add(titleLabel);
@@ -143,13 +176,9 @@ public class Controller extends Application{
         border.getChildren().add(helpButton);
         border.getChildren().add(mentionLabel);
 
-		/**
-		 * Insert an image.
-		 */
-        GraphicsContext graphic = aCanvas.getGraphicsContext2D();
-        Image background = new Image("https://cdn.pixabay.com/photo/2015/06/19/21/24/the-road-815297_1280.jpg");
-        graphic.drawImage(background,0,0,GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
-
+        /**
+         * Show the pane in this scene.
+         */
         Scene menuscene = new Scene(border, GameView.rowNum * GameView.nodeSize, GameView.colNum * GameView.nodeSize);
         primaryStage.setScene(menuscene);
 		primaryStage.setTitle("SNAKE FRENZY");
