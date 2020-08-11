@@ -373,6 +373,33 @@ public class GameView extends Application{
 			break;
 	}
 	}
+	
+	/**
+	 * reference
+	 * coin image: https://www.scbao.com/sc/1214979.html
+	 * 
+	 * bomb image: https://www.google.com/search?q=%E7%82%B8%E5%BC%B9+%E7%9F%A2%E9\n
+	 * %87%8F&tbm=isch&ved=2ahUKEwiSi8S3jpLrAhWTnZ4KHYtEBYUQ2-cCegQIABAA&oq=\n
+	 * %E7%82%B8%E5%BC%B9+%E7%9F%A2%E9%87%8F&gs_lcp=CgNpbWcQAzIECCMQJzIECCMQJzo\n
+	 * CCAA6BAgAEAxQg5ACWMCiAmCUpAJoAHAAeACAAVSIAaMGkgECMTGYAQCgAQGqAQtnd3Mtd2l6\n
+	 * LWltZ8ABAQ&sclient=img&ei=kQMyX9L-FpO7-gSLiZWoCA&bih=1176&biw=1931&rlz=1C5CHFA_enCA816CA819#imgrc=Xr0OWqMfi_J5CM
+	 * 
+	 * obstacle image: http://xsj.699pic.com/tupian/0fcn4h.html
+	 * 
+	 * snake head image: https://www.google.com/search?q=%E8%B4%AA%E5%90%83%E8%9B%87+\n
+	 * %E6%B8%B8%E6%88%8F%E5%9B%BE%E6%A0%87&tbm=isch&ved=2ahUKEwjwuJuCj5LrAhWNlJ4KHUC8\n
+	 * CkIQ2-cCegQIABAA&oq=%E8%B4%AA%E5%90%83%E8%9B%87+&gs_lcp=CgNpbWcQARgBMgQIIxAnMgQ\n
+	 * IIxAnMgQIABAMMgQIABAMMgQIABAMMgQIABAMMgQIABAMMgQIABAMMgQIABAMMgQIABAMUJ8nWN0oYPd\n
+	 * HaABwAHgAgAFHiAGKAZIBATKYAQCgAQGqAQtnd3Mtd2l6LWltZ8ABAQ&sclient=img&ei=LQQyX7DuPI2\n
+	 * p-gTA-KqQBA&bih=1176&biw=1931&rlz=1C5CHFA_enCA816CA819#imgrc=3dgN-55tuKb36M
+	 * 
+	 * eat coin sound:  http://www.aigei.com/sound/class/chew_4/
+	 * 
+	 * hit bomb sound: http://www.aigei.com/sound/class/explosion_6/
+	 * 
+	 * the snake body image is make by our own.
+	 * we did some edit with the image that we download.
+	 */
 
 	
 }
