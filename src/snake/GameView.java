@@ -20,6 +20,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+/**
+ * This class contains keyboard event handling methods
+ * to control the snake, pause and resume game play
+ * and some logics in the game play
+ * @author Ha Do & Zonglin Zhang
+ */
 
 public class GameView extends Application{
 	static Dir direction = Dir.left;
@@ -57,11 +63,13 @@ public class GameView extends Application{
 		Canvas aCanvas = new Canvas(rowNum * nodeSize, colNum * nodeSize);
 	
 		root.getChildren().addAll(aCanvas);
-                System.out.println("in finishe select menu..");
+                System.out.println("in finished select menu..");
 		GraphicsContext graphic = aCanvas.getGraphicsContext2D();
 
 		/**
-		 * using animationTimer to make the snake to move itself.
+		 * using animationTimer to make the snake to move itself
+		 * when variable now reaches 1000000000 / speed, a new frame will be created
+		 * and the snake, eggs and obstacles will be updated accordingly
 		 */
 		AnimationTimer timer = new AnimationTimer() {
 			long lastSceen = 0;
