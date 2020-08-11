@@ -361,4 +361,8 @@ public class Frame{
 		this.score = score;
 	}
 	
+	public static void main(String[] arg) {
+		Frame frame = new Frame();
+		frame.run();
+	}
 }
