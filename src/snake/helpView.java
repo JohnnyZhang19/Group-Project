@@ -19,6 +19,9 @@ import javafx.stage.Stage;
 public class helpView extends Application{
 
 	@Override
+	/**
+	 * To start this scene.
+	 */
 	public void start(Stage primaryStage) throws Exception {
 		
 		/**
